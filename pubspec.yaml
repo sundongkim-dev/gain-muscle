@@ -56,6 +56,7 @@ dev_dependencies:
 flutter:
   assets:
     - assets/ # Img 사용하려면 등록
+    - assets/Img/splashImg/splashImg.png # Img 사용하려면 등록
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
