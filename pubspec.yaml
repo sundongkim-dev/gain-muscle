@@ -102,10 +102,8 @@ flutter_native_splash:
   image: assets/Img/splashImg/splashImg.png       # 스플래시 스크린의 이미지
   android: true
   ios: true
-  web: true
+  fullscreen: false
   # android
-  # android_gravity:
+  android_gravity: center
   # ios
   # ios_content_mode:
-  web_image_mode: center
-  fullscreen: true
