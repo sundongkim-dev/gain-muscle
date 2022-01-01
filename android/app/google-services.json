@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "365203330400",
+    "project_id": "gainmuscle-96a00",
+    "storage_bucket": "gainmuscle-96a00.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:365203330400:android:ac1f350519b7363114ba05",
+        "android_client_info": {
+          "package_name": "com.example.gain_muscle"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "365203330400-ndblor60n1fevvkqllcgdeqhcsc580hj.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.gain_muscle",
+            "certificate_hash": "6bdd7ee55bd5b4132edc7853f386b6805bbe2385"
+          }
+        },
+        {
+          "client_id": "365203330400-6840563mll113gl3blb79ks5pbdqsv6h.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA1Ogcy5T-FtHSN1odwgwukc4Z_SKjir_s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "365203330400-6840563mll113gl3blb79ks5pbdqsv6h.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
