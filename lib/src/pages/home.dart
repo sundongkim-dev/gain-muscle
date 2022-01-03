@@ -9,6 +9,7 @@ import 'package:provider/provider.dart';
 class Home extends StatelessWidget {
   const Home({Key? key, required this.cameras}) : super(key: key);
   final List<CameraDescription> cameras;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -41,3 +42,4 @@ class Home extends StatelessWidget {
     );
   }
 }
+

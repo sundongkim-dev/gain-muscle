@@ -37,7 +37,7 @@ dependencies:
   camera:
   path_provider:
   path:
-  
+
   # Firebase
   firebase_core: ^1.10.6
   firebase_auth: ^3.3.4
@@ -45,6 +45,7 @@ dependencies:
   google_sign_in: ^5.2.1
   # facebook login
   flutter_facebook_auth: ^3.5.7
+
   # SNS login button
   flutter_signin_button: ^2.0.0
 
