@@ -19,22 +19,18 @@ class Home extends StatelessWidget {
             return LoginWidget();
           } else {
             return Center(
-                child: Column(
-                  children: [
-                    Text("${snapshot.data?.displayName}님 환영해요."),
-                    TextButton(
-                      child: Text("로그아웃"),
-                      onPressed: () {
-                        FirebaseAuth.instance.signOut();
-                      },
-                    ),
-                  ],
-                ),
+              child: Column(
+                children: [
+                  Text("${snapshot.data?.displayName}님 환영해요."),
+                  TextButton(
+                    child: Text("로그아웃"),
+                    onPressed: () {
+                      FirebaseAuth.instance.signOut();
+                    },
+                  ),
+                ],
+              ),
             );
-            /*return MaterialApp(
-                home: ChangeNotifierProvider(
-                    create: (context) => PageProvider(),
-                    child: BaseView(cameras: cameras)));*/
           }
         },
       ),

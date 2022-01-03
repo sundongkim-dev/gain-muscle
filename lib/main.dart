@@ -11,10 +11,6 @@ Future<void> main() async {
   // Obtain a list of the available cameras on the device.
   final cameras = await availableCameras();
 
-  // Get a specific camera from the list of available cameras.
-  // final rearCamera = cameras.first; // 핸드폰 뒤쪽 카메라
-  // final frontCamera = cameras.last; // 핸드폰 앞쪽 카메라
-  // print('main!!');
   runApp(MyApp(cameras: cameras)); // 앱 시작
 }
 
