@@ -45,6 +45,9 @@ dependencies:
   google_sign_in: ^5.2.1
   # facebook login
   flutter_facebook_auth: ^3.5.7
+  # SNS login button
+  flutter_signin_button: ^2.0.0
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -65,9 +68,7 @@ dev_dependencies:
 # The following section is specific to Flutter.
 flutter:
   assets:
-    - assets/ # Img 사용하려면 등록
-    - assets/Img/splashImg/splashImg.png # Img 사용하려면 등록
-
+    - assets/Img/
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.

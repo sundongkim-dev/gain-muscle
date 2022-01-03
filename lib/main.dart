@@ -3,14 +3,6 @@ import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:gain_muscle/src/app.dart';
 
-// import 'package:flutter/widgets.dart';
-// import 'package:gain_muscle/provider/page_provider.dart';
-// import 'package:gain_muscle/views/home_view.dart';
-// import 'package:gain_muscle/views/item_view.dart';
-// import 'package:gain_muscle/views/record_view.dart';
-// import 'package:gain_muscle/views/user_view.dart';
-// import 'package:provider/provider.dart';
-
 Future<void> main() async {
   // Ensure that plugin services are initialized so that `availableCameras()`
   // can be called before `runApp()`
