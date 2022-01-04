@@ -1,6 +1,8 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:gain_muscle/views/camera_view.dart';
+import 'package:gain_muscle/views/daily_record_view.dart';
+import 'package:get/get.dart';
 
 class homeView extends StatefulWidget {
   const homeView({Key? key, required this.cameras}) : super(key: key);
@@ -20,14 +22,23 @@ class _homeViewState extends State<homeView> {
             // mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Expanded(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Icon(Icons.search),
-                    Text('운동 기록하기'),
-                  ],
-                ),
+                child: TextButton.icon(
+                    onPressed: () {
+                      Get.to(DailyRecordView());
+                    },
+                    icon: Icon(Icons.search),
+                    label: Text('운동 기록하기')),
               ),
+
+              // Expanded(
+              //   child: Row(
+              //     mainAxisAlignment: MainAxisAlignment.start,
+              //     children: [
+              //       Icon(Icons.search),
+              //       Text('운동 기록하기'),
+              //     ],
+              //   ),
+              // ),
               IconButton(
                   onPressed: () async {
                     await Navigator.of(context).push(

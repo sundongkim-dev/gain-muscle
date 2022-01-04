@@ -47,6 +47,7 @@ dependencies:
   flutter_facebook_auth: ^3.5.7
   # SNS login button
   flutter_signin_button: ^2.0.0
+  get: ^4.6.1
 
 dev_dependencies:
   flutter_test:
