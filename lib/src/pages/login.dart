@@ -4,9 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_signin_button/button_builder.dart';
 import 'package:flutter_signin_button/button_list.dart';
 import 'package:flutter_signin_button/button_view.dart';
-import 'package:gain_muscle/src/pages/login_text.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
+import 'package:uuid/uuid.dart';
+import 'package:flutter_web_auth/flutter_web_auth.dart';
 
 class LoginWidget extends StatelessWidget {
   const LoginWidget({Key? key}) : super(key: key);
@@ -15,8 +16,7 @@ class LoginWidget extends StatelessWidget {
     // Trigger the authentication flow
     final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
     // Obtain the auth details from the request
-    final GoogleSignInAuthentication? googleAuth =
-        await googleUser?.authentication;
+    final GoogleSignInAuthentication? googleAuth = await googleUser?.authentication;
     // Create a new credential
     final credential = GoogleAuthProvider.credential(
       accessToken: googleAuth?.accessToken,
@@ -34,6 +34,22 @@ class LoginWidget extends StatelessWidget {
         FacebookAuthProvider.credential(loginResult.accessToken!.token);
     // Once signed in, return the UserCredential
     return FirebaseAuth.instance.signInWithCredential(facebookAuthCredential);
+  }
+
+  Future<UserCredential> signInWithKakao() async {
+    final clientState = Uuid().v4();
+    final url = Uri.https('kauth.kakao.com', '/oauth/authorize', {
+      'response_type' : 'code',
+      'client_id': 'f43889a10dc29482de528eaac3428128',
+      'redirect_uri': 'http://172.30.1.41:8080/kakao/sign_in',
+      'state': clientState,
+    });
+    final result = await FlutterWebAuth.authenticate(
+        url: url.toString(), callbackUrlScheme: "webauthcallback");
+
+    final body = Uri.parse(result).queryParameters;
+    print(body);
+    return 1;
   }
 
   @override
@@ -143,6 +159,30 @@ class LoginWidget extends StatelessWidget {
                           text: "Google",
                           onPressed: signInWithGoogle,
                         )),
+                      ],
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.all(20),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Flexible(
+                          child: SignInButton(
+                            Buttons.Facebook,
+                            text: "Kakao",
+                            onPressed: signInWithKakao,
+                          ),
+                        ),
+                        const SizedBox(
+                          width: 10,
+                        ),
+                        Flexible(
+                            child: SignInButton(
+                              Buttons.Google,
+                              text: "Naver",
+                              onPressed: () {},
+                            )),
                       ],
                     ),
                   ),
