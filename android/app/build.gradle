@@ -77,5 +77,4 @@ dependencies {
     // erase it
     implementation 'com.google.guava:listenablefuture:9999.0-empty-to-avoid-conflict-with-guava'
     // Firebase facebook SDK
-    implementation 'com.facebook.android:facebook-android-sdk:[4,5)'
 }
