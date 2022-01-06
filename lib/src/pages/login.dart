@@ -4,13 +4,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_signin_button/button_builder.dart';
 import 'package:flutter_signin_button/button_list.dart';
 import 'package:flutter_signin_button/button_view.dart';
+import 'package:gain_muscle/src/pages/register.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:uuid/uuid.dart';
 import 'package:flutter_web_auth/flutter_web_auth.dart';
 
+final FirebaseAuth _auth = FirebaseAuth.instance;
+
 class LoginWidget extends StatelessWidget {
-  const LoginWidget({Key? key}) : super(key: key);
+  LoginWidget({Key? key}) : super(key: key);
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
 
   Future<UserCredential> signInWithGoogle() async {
     // Trigger the authentication flow
@@ -36,6 +41,9 @@ class LoginWidget extends StatelessWidget {
     return FirebaseAuth.instance.signInWithCredential(facebookAuthCredential);
   }
 
+  Future<bool> signInWithEmail(String email, String password) async {
+    final User user = await _auth.signInWithEmailAndPassword(email: _emailController.text, password: _passwordController.text)
+  }
   /*Future<UserCredential> signInWithKakao() async {
     final clientState = Uuid().v4();
     final url = Uri.https('kauth.kakao.com', '/oauth/authorize', {
@@ -84,6 +92,10 @@ class LoginWidget extends StatelessWidget {
                     ),
                   ]),
                   TextField(
+                    maxLines: 1,
+                    keyboardType: TextInputType.emailAddress,
+                    controller: _emailController,
+                    onSaved: (value) => _emailController.text = value!.trim(),
                     decoration: InputDecoration(
                       prefixIcon: Icon(Icons.email),
                       labelText: "이메일",
@@ -102,7 +114,9 @@ class LoginWidget extends StatelessWidget {
                     alignment: Alignment.center,
                     child: SignInButtonBuilder(
                       backgroundColor: Colors.redAccent,
-                      onPressed: () {},
+                      onPressed: () {
+
+                      },
                       text: "이메일로 로그인",
                       icon: Icons.email,
                       width: double.infinity,
@@ -168,7 +182,7 @@ class LoginWidget extends StatelessWidget {
                           child: SignInButton(
                             Buttons.Facebook,
                             text: "Kakao",
-                            onPressed: signInWithKakao,
+                            onPressed: () {}, //signInWithKakao,
                           ),
                         ),
                         const SizedBox(
@@ -197,7 +211,10 @@ class LoginWidget extends StatelessWidget {
                             decoration: TextDecoration.underline,
                           ),
                         ),
-                        onPressed: null,
+                        onPressed: () => Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => RegisterWidget()),
+                        ),
                         child: const Text(
                           "회원가입",
                           style: TextStyle(color: Colors.black),
