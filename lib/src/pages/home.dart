@@ -22,19 +22,6 @@ class Home extends StatelessWidget {
             return ChangeNotifierProvider(
                 create: (context) => PageProvider(),
                 child: BaseView(cameras: cameras));
-            // // Center(
-            // //   child: Column(
-            // //     children: [
-            // //       Text("${snapshot.data?.displayName}님 환영해요."),
-            // //       TextButton(
-            // //         child: Text("로그아웃"),
-            // //         onPressed: () {
-            // //           FirebaseAuth.instance.signOut();
-            // //         },
-            // //       ),
-            // //     ],
-            // //   ),
-            // // );
           }
         },
       ),

@@ -36,7 +36,7 @@ class LoginWidget extends StatelessWidget {
     return FirebaseAuth.instance.signInWithCredential(facebookAuthCredential);
   }
 
-  Future<UserCredential> signInWithKakao() async {
+  /*Future<UserCredential> signInWithKakao() async {
     final clientState = Uuid().v4();
     final url = Uri.https('kauth.kakao.com', '/oauth/authorize', {
       'response_type' : 'code',
@@ -50,7 +50,7 @@ class LoginWidget extends StatelessWidget {
     final body = Uri.parse(result).queryParameters;
     print(body);
     return 1;
-  }
+  }*/
 
   @override
   Widget build(BuildContext context) {
@@ -66,14 +66,11 @@ class LoginWidget extends StatelessWidget {
               hasScrollBody: false,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                /*child:
-            Image.asset("assets/Img/loginImages/muscle.png"),*/
                 children: [
                   const Text(
                     "  로그인",
                     style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
                   ),
-                  // Image.asset("assets/Img/loginImages/muscle.png"),
                   Center(
                     child: Image(
                       image: AssetImage("assets/Img/loginImages/muscle.png"),
