@@ -89,7 +89,13 @@ class TakePictureScreenState extends State<TakePictureScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: const Text('오늘의 운동샷 찍기')),
+        appBar: AppBar(
+          title: const Text(
+            '오늘의 운동샷 찍기',
+            style: TextStyle(color: Colors.black),
+          ),
+          backgroundColor: Color(0xff84ffff),
+        ),
         // You must wait until the controller is initialized before displaying the
         // camera preview. Use a FutureBuilder to display a loading spinner until the
         // controller has finished initializing.
@@ -207,7 +213,10 @@ class DisplayPictureScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Display the Picture')),
+      appBar: AppBar(
+        title: const Text('Display the Picture'),
+        backgroundColor: Color(0xff84ffff),
+      ),
       // The image is stored as a file on the device. Use the `Image.file`
       // constructor with the given path to display the image.
       body: Image.file(File(imagePath)),

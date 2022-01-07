@@ -21,24 +21,16 @@ class _homeViewState extends State<homeView> {
           Row(
             // mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Expanded(
+              Padding(
+                padding: EdgeInsets.fromLTRB(15, 0, 0, 0),
                 child: TextButton.icon(
                     onPressed: () {
-                      Get.to(DailyRecordView());
+                      Get.to(() => DailyRecordView());
                     },
                     icon: Icon(Icons.search),
                     label: Text('운동 기록하기')),
               ),
-
-              // Expanded(
-              //   child: Row(
-              //     mainAxisAlignment: MainAxisAlignment.start,
-              //     children: [
-              //       Icon(Icons.search),
-              //       Text('운동 기록하기'),
-              //     ],
-              //   ),
-              // ),
+              Spacer(),
               IconButton(
                   onPressed: () async {
                     await Navigator.of(context).push(

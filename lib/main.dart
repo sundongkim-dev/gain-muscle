@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:gain_muscle/src/app.dart';
 import 'package:get/get.dart';
+import 'package:firebase_core/firebase_core.dart';
 
 Future<void> main() async {
   // Ensure that plugin services are initialized so that `availableCameras()`
@@ -24,22 +25,32 @@ Future<void> main() async {
 // 네모박스: Container()
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key, required this.cameras}) : super(key: key);
+  MyApp({Key? key, required this.cameras}) : super(key: key);
 
+  final Future<FirebaseApp> _initialization = Firebase.initializeApp();
   final List<CameraDescription> cameras;
   @override
   Widget build(BuildContext context) {
     print('myapp');
-    return GetMaterialApp(
-        // home: Image.asset('img/splashImg/splashImg.png')
-        /*home: Center(
-        child: Container(width:50, height:50, color:Colors.blue), // 사이즈 단위는 픽셀이 아닌 LP, 50LP == 1.2cm
-      )*/
-        home: App(
-      cameras: cameras,
-    ));
-    // home: ChangeNotifierProvider(
-    //     create: (context) => PageProvider(),
-    //     child: BasicStructure(cameras: cameras)));
+
+    return FutureBuilder(
+        future: _initialization,
+        builder: (context, snapshot) {
+          if (snapshot.hasError) {
+            return Container();
+          }
+          if (snapshot.connectionState == ConnectionState.done) {
+            return GetMaterialApp(
+                home: App(
+              cameras: cameras,
+            ));
+          }
+          return CircularProgressIndicator();
+        });
+
+    // return GetMaterialApp(
+    //     home: App(
+    //   cameras: cameras,
+    // ));
   }
 }
