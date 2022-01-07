@@ -22,11 +22,9 @@ class _DailyRecordViewState extends State<DailyRecordView> {
   var controller1 = TextEditingController();
   var controller2 = TextEditingController();
   var controller3 = TextEditingController();
-  // FirebaseFirestore firestore = FirebaseFirestore.instance;
-  CollectionReference record = FirebaseFirestore.instance.collection('records');
+
   FirebaseAuth auth = FirebaseAuth.instance;
   String uid = FirebaseAuth.instance.currentUser!.uid;
-
   CollectionReference user = FirebaseFirestore.instance.collection('user');
 
   void addRecord() {
