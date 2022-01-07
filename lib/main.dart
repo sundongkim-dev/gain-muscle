@@ -1,19 +1,16 @@
 import 'package:camera/camera.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:gain_muscle/src/app.dart';
 import 'package:get/get.dart';
-import 'package:firebase_core/firebase_core.dart';
 
 Future<void> main() async {
-  // Ensure that plugin services are initialized so that `availableCameras()`
-  // can be called before `runApp()`
   WidgetsFlutterBinding.ensureInitialized();
-
-  // Obtain a list of the available cameras on the device.
+  await Firebase.initializeApp();
   final cameras = await availableCameras();
 
-  runApp(MyApp(cameras: cameras)); // 앱 시작
+  runApp(MyApp(cameras: cameras));
 }
 
 class MyApp extends StatelessWidget {
@@ -24,20 +21,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     print('myapp');
-
-    return FutureBuilder(
-        future: _initialization,
-        builder: (context, snapshot) {
-          if (snapshot.hasError) {
-            return Container();
-          }
-          if (snapshot.connectionState == ConnectionState.done) {
-            return GetMaterialApp(
-                home: App(
-              cameras: cameras,
-            ));
-          }
-          return CircularProgressIndicator();
-        });
+    return GetMaterialApp(
+        home: App(
+      cameras: cameras,
+    ));
   }
 }

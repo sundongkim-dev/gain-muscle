@@ -49,7 +49,7 @@ class _recordViewState extends State<recordView> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  for (int i = 0; i < record.time.length; i++)
+                  for (int i = record.time.length - 1; i >= 0; i--)
                     ListView.separated(
                       physics: const NeverScrollableScrollPhysics(),
                       scrollDirection: Axis.vertical,
