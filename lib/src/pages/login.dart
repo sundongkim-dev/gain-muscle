@@ -16,6 +16,7 @@ class LoginWidget extends StatelessWidget {
   LoginWidget({Key? key}) : super(key: key);
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
+  GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   Future<UserCredential> signInWithGoogle() async {
     // Trigger the authentication flow
@@ -41,10 +42,23 @@ class LoginWidget extends StatelessWidget {
     return FirebaseAuth.instance.signInWithCredential(facebookAuthCredential);
   }
 
-  Future<bool> signInWithEmail(String email, String password) async {
-    final User user = await _auth.signInWithEmailAndPassword(email: _emailController.text, password: _passwordController.text)
+  void signInWithEmail() async {
+    try{
+      UserCredential userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(
+          email: _emailController.text,
+          password: _passwordController.text
+      );
+    } on FirebaseAuthException catch (e) {
+      if(e.code == 'user-not-found'){
+        print('No user found for that email.');
+      } else if (e.code == 'wrong-password') {
+        print('Wrong password provided for that user.');
+      }
+    } catch (e) {
+      print(e);
+    }
   }
-  /*Future<UserCredential> signInWithKakao() async {
+/*Future<UserCredential> signInWithKakao() async {
     final clientState = Uuid().v4();
     final url = Uri.https('kauth.kakao.com', '/oauth/authorize', {
       'response_type' : 'code',
@@ -59,7 +73,6 @@ class LoginWidget extends StatelessWidget {
     print(body);
     return 1;
   }*/
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -68,30 +81,31 @@ class LoginWidget extends StatelessWidget {
           backgroundColor: Colors.transparent,
           elevation: 0.0,
         ),
-        body: CustomScrollView(
-          slivers: [
-            SliverFillRemaining(
+        body: Form(
+          key: formKey,
+          child: CustomScrollView(
+            slivers: [
+              SliverFillRemaining(
               hasScrollBody: false,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const Text(
-                    "  로그인",
-                    style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+                  "  로그인",
+                  style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
                   ),
                   Center(
                     child: Image(
-                      image: AssetImage("assets/Img/loginImages/muscle.png"),
+                    image: AssetImage("assets/Img/loginImages/muscle.png"),
                     ),
                   ),
-                  // Spacer(),
                   Row(mainAxisAlignment: MainAxisAlignment.center, children: [
                     const Text(
                       "환영합니다 :)\n득근득근 입니다!",
                       textAlign: TextAlign.center,
                     ),
                   ]),
-                  TextField(
+                  TextFormField(
                     maxLines: 1,
                     keyboardType: TextInputType.emailAddress,
                     controller: _emailController,
@@ -101,8 +115,13 @@ class LoginWidget extends StatelessWidget {
                       labelText: "이메일",
                     ),
                   ),
-                  // Spacer(),
-                  TextField(
+                  TextFormField(
+                    maxLines: 1,
+                    keyboardType: TextInputType.visiblePassword,
+                    controller: _passwordController,
+                    onSaved: (value) => _passwordController.text = value!.trim(),
+                    obscureText: true,
+                    autocorrect: false,
                     decoration: InputDecoration(
                       prefixIcon: Icon(Icons.lock),
                       labelText: "비밀번호",
@@ -115,7 +134,7 @@ class LoginWidget extends StatelessWidget {
                     child: SignInButtonBuilder(
                       backgroundColor: Colors.redAccent,
                       onPressed: () {
-
+                        signInWithEmail();
                       },
                       text: "이메일로 로그인",
                       icon: Icons.email,
@@ -137,7 +156,6 @@ class LoginWidget extends StatelessWidget {
                       style: TextStyle(color: Colors.black),
                     ),
                   ),
-                  // Spacer(),
                   Row(
                     children: [
                       Expanded(child: Divider()),
@@ -166,10 +184,10 @@ class LoginWidget extends StatelessWidget {
                         ),
                         Flexible(
                             child: SignInButton(
-                          Buttons.Google,
-                          text: "Google",
-                          onPressed: signInWithGoogle,
-                        )),
+                              Buttons.Google,
+                              text: "Google",
+                              onPressed: signInWithGoogle,
+                            )),
                       ],
                     ),
                   ),
@@ -224,6 +242,6 @@ class LoginWidget extends StatelessWidget {
               ),
             )
           ],
-        ));
+      )));
   }
 }
