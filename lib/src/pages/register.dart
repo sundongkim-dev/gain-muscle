@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_signin_button/button_builder.dart';
+import 'package:gain_muscle/src/pages/home.dart';
 import 'package:gain_muscle/src/pages/validate.dart';
 
 final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -19,7 +20,7 @@ class _RegisterWidgetState extends State<RegisterWidget> {
   final FocusNode _emailFocus = FocusNode();
   final FocusNode _passwordFocus = FocusNode();
   bool _success = false;
-  late String _userEmail;
+  String _userEmail = '';
 
   @override
   Widget build(BuildContext context) {
@@ -90,9 +91,13 @@ class _RegisterWidgetState extends State<RegisterWidget> {
                 child: SignInButtonBuilder(
                   backgroundColor: Colors.redAccent,
                   onPressed: () async {
-                    formKey.currentState?.validate();
-                    _register();
-                    Navigator.of(context).pop();
+                    if(formKey.currentState!.validate()){
+                      _register();
+                      if(_userEmail != ''){
+                        Navigator.of(context).pop();
+                      }
+                    }
+                    print("Wrongapproach");
                   },
                   text: "회원가입",
                   icon: Icons.email,
