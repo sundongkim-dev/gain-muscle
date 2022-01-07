@@ -103,7 +103,6 @@ class _DailyRecordViewState extends State<DailyRecordView> {
     return user
         .doc(uid)
         .set({'record': jsonEncode(realRecord.toJson())})
-        // .set({'uid': uid, 'record': jsonRec})
         .then((value) => print("User Added"))
         .catchError((error) => print("Failed to add user: $error"));
   }
@@ -170,13 +169,6 @@ class _DailyRecordViewState extends State<DailyRecordView> {
                         decoration: InputDecoration(
                           prefixIcon: Icon(Icons.favorite),
                           labelText: "운동명",
-                          // suffixIcon: IconButton(
-                          //     icon: Icon(
-                          //       Icons.clear,
-                          //     ),
-                          // onPressed: _TextController.clear
-                          // hintText: "스쿼트",
-                          // ),
                         ),
                         onChanged: (String str) {
                           name = str;
@@ -189,9 +181,6 @@ class _DailyRecordViewState extends State<DailyRecordView> {
                         decoration: InputDecoration(
                           prefixIcon: Icon(MyFlutterApp.weight_hanging),
                           labelText: "무게(kg)",
-                          // suffixIcon: IconButton(
-                          //     icon: Icon(Icons.clear),
-                          //     onPressed: _TextController.clear),
                         ),
                         onChanged: (String str) {
                           weight = str;
@@ -205,9 +194,6 @@ class _DailyRecordViewState extends State<DailyRecordView> {
                         decoration: InputDecoration(
                           prefixIcon: Icon(Icons.music_note),
                           labelText: "반복횟수",
-                          // suffixIcon: IconButton(
-                          //     icon: Icon(Icons.clear),
-                          //     onPressed: _TextController.clear),
                         ),
                         onChanged: (String str) {
                           rep = str;

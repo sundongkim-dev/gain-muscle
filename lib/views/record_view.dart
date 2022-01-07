@@ -17,44 +17,67 @@ class _recordViewState extends State<recordView> {
   CollectionReference user = FirebaseFirestore.instance.collection('user');
   FirebaseAuth auth = FirebaseAuth.instance;
   String uid = FirebaseAuth.instance.currentUser!.uid;
-  var documentSnapshot;
-  var data;
-  late Record userRecord;
-  // documentSnapshot = await user.doc(uid).get();
-  // data = documentSnapshot.data();
-  // // String jsonStr = jsonEncode(data);
-  // // Map<String, dynamic> rec2 = jsonDecode(jsonStr);
-  // // Map<String, dynamic> rec3 = jsonDecode(rec2['record']);
-  // // userRecord = Record.fromJson(rec3);
+  Record record =
+      Record(uid: '', exercise: [''], time: ['']); // 밑에서 갱신해주므로 쓰레기값으로 만듬
 
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    initialize();
-  }
-
-  void initialize() async {
-    documentSnapshot = await user.doc(uid).get();
-    data = documentSnapshot.data();
+  Future<Record> initialize() async {
+    var documentSnapshot = await user.doc(uid).get();
+    var data = documentSnapshot.data();
     String jsonStr = jsonEncode(data);
     Map<String, dynamic> rec2 = jsonDecode(jsonStr);
     Map<String, dynamic> rec3 = jsonDecode(rec2['record']);
-    userRecord = Record.fromJson(rec3);
-    print(userRecord.exercise);
+    record = Record.fromJson(rec3);
+    return record;
   }
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-        child: Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        Text(
-          '운동기록',
-          style: TextStyle(fontSize: 20),
-        ),
-      ],
-    ));
+    Future<Record> futureRecord = initialize();
+
+    return FutureBuilder(
+      future: futureRecord,
+      builder: (context, snapshot) {
+        if (snapshot.hasError) {
+          return Container();
+        }
+        if (snapshot.connectionState == ConnectionState.done) {
+          print(record.exercise);
+          print(record.time);
+          return Scaffold(
+            resizeToAvoidBottomInset: false,
+            body: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  for (int i = 0; i < record.time.length; i++)
+                    ListView.separated(
+                      physics: const NeverScrollableScrollPhysics(),
+                      scrollDirection: Axis.vertical,
+                      shrinkWrap: true,
+                      itemCount: record.exercise[i].length + 1,
+                      itemBuilder: (context, index) {
+                        if (index == 0) {
+                          return ListTile(
+                            title: Text(record.time[i] + "의 운동"),
+                          );
+                        }
+                        return ExerciseTile(
+                            name: record.exercise[i][index - 1][0],
+                            weight: record.exercise[i][index - 1][1],
+                            rep: record.exercise[i][index - 1][2]);
+                      },
+                      separatorBuilder: (context, index) {
+                        // if (index == 0) return SizedBox.shrink();
+                        return Divider();
+                      },
+                    ),
+                ],
+              ),
+            ),
+          );
+        }
+        return CircularProgressIndicator();
+      },
+    );
   }
 }
