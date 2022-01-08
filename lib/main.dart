@@ -14,15 +14,16 @@ Future<void> main() async {
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key, required this.cameras}) : super(key: key);
+  MyApp({Key? key, required this.cameras}) : super(key: key);
 
+  final Future<FirebaseApp> _initialization = Firebase.initializeApp();
   final List<CameraDescription> cameras;
   @override
   Widget build(BuildContext context) {
     print('myapp');
     return GetMaterialApp(
         home: App(
-          cameras: cameras,
+      cameras: cameras,
     ));
   }
 }

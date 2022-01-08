@@ -29,7 +29,10 @@ class BaseView extends StatelessWidget {
             Icons.favorite,
             color: Colors.red,
           ),
-          title: Text('넌 이미 운동을 하고 있다'),
+          title: Text(
+            '넌 이미 운동을 하고 있다',
+            style: TextStyle(color: Colors.black),
+          ),
         ),
         body: _page[pageProvider.idx],
         bottomNavigationBar: BottomNavigationBar(
