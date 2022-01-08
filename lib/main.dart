@@ -8,22 +8,16 @@ import 'package:get/get.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  final cameras = await availableCameras();
-
-  runApp(MyApp(cameras: cameras));
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  MyApp({Key? key, required this.cameras}) : super(key: key);
+  MyApp({Key? key}) : super(key: key);
 
   final Future<FirebaseApp> _initialization = Firebase.initializeApp();
-  final List<CameraDescription> cameras;
   @override
   Widget build(BuildContext context) {
     print('myapp');
-    return GetMaterialApp(
-        home: App(
-      cameras: cameras,
-    ));
+    return GetMaterialApp(home: App());
   }
 }
