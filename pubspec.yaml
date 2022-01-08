@@ -81,7 +81,7 @@ flutter:
   uses-material-design: true
   assets:
     - assets/Img/loginImages/muscle.png
-
+    - assets/Img/userviewImg/strong.png
   fonts:
   - family: MyFlutterApp
     fonts:
