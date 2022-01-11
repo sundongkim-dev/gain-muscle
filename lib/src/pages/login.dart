@@ -1,4 +1,3 @@
-import 'dart:ui';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_signin_button/button_builder.dart';
@@ -58,21 +57,26 @@ class LoginWidget extends StatelessWidget {
       print(e);
     }
   }
-/*Future<UserCredential> signInWithKakao() async {
+Future<UserCredential> signInWithKakao() async {
     final clientState = Uuid().v4();
     final url = Uri.https('kauth.kakao.com', '/oauth/authorize', {
       'response_type' : 'code',
       'client_id': 'f43889a10dc29482de528eaac3428128',
       'redirect_uri': 'http://172.30.1.41:8080/kakao/sign_in',
+      //'redirect_uri': 'http://172.17.64.1:8080/kakao/sign_in',
       'state': clientState,
     });
     final result = await FlutterWebAuth.authenticate(
-        url: url.toString(), callbackUrlScheme: "webauthcallback");
+        url: url.toString(),
+        callbackUrlScheme: "webauthcallback"
+    );
 
-    final body = Uri.parse(result).queryParameters;
-    print(body);
-    return 1;
-  }*/
+    final params = Uri.parse(result).queryParameters;
+    print(params);
+
+    return FirebaseAuth.instance.signInWithCustomToken(params['customToken']!);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -200,7 +204,7 @@ class LoginWidget extends StatelessWidget {
                           child: SignInButton(
                             Buttons.Facebook,
                             text: "Kakao",
-                            onPressed: () {}, //signInWithKakao,
+                            onPressed: signInWithKakao, //signInWithKakao,
                           ),
                         ),
                         const SizedBox(
