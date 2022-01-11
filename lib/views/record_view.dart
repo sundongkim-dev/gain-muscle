@@ -21,6 +21,7 @@ class _recordViewState extends State<recordView> {
       Record(uid: '', exercise: [''], time: ['']); // 밑에서 갱신해주므로 쓰레기값으로 만듬
 
   Future<Record> initialize() async {
+    // 아직 유저기록이 없을때도 핸들링해줘야함. 이거 생각해보기!
     var documentSnapshot = await user.doc(uid).get();
     var data = documentSnapshot.data();
     String jsonStr = jsonEncode(data);

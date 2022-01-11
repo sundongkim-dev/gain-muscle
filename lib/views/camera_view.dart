@@ -91,7 +91,7 @@ class TakePictureScreenState extends State<TakePictureScreen> {
     return Scaffold(
         appBar: AppBar(
           title: const Text(
-            '오늘의 운동샷 찍기',
+            '눈바디',
             style: TextStyle(color: Colors.black),
           ),
           backgroundColor: Color(0xff84ffff),
@@ -113,6 +113,9 @@ class TakePictureScreenState extends State<TakePictureScreen> {
                   return const Center(child: CircularProgressIndicator());
                 }
               },
+            ),
+            SizedBox(
+              height: 20,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -168,38 +171,7 @@ class TakePictureScreenState extends State<TakePictureScreen> {
               ],
             )
           ],
-        )
-        // floatingActionButton: FloatingActionButton(
-        //   // Provide an onPressed callback.
-        //   onPressed: () async {
-        //     // Take the Picture in a try / catch block. If anything goes wrong,
-        //     // catch the error.
-        //     try {
-        //       // Ensure that the camera is initialized.
-        //       await _initializeControllerFuture;
-
-        //       // Attempt to take a picture and get the file `image`
-        //       // where it was saved.
-        //       final image = await _controller.takePicture();
-
-        //       // If the picture was taken, display it on a new screen.
-        //       await Navigator.of(context).push(
-        //         MaterialPageRoute(
-        //           builder: (context) => DisplayPictureScreen(
-        //             // Pass the automatically generated path to
-        //             // the DisplayPictureScreen widget.
-        //             imagePath: image.path,
-        //           ),
-        //         ),
-        //       );
-        //     } catch (e) {
-        //       // If an error occurs, log the error to the console.
-        //       print(e);
-        //     }
-        //   },
-        //   child: const Icon(Icons.camera_alt),
-        // ),
-        );
+        ));
   }
 }
 

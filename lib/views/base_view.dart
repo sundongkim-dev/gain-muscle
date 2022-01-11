@@ -1,4 +1,3 @@
-import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:gain_muscle/provider/page_provider.dart';
 import 'package:gain_muscle/views/record_view.dart';
@@ -9,17 +8,11 @@ import 'home_view.dart';
 import 'item_view.dart';
 
 class BaseView extends StatelessWidget {
-  const BaseView({Key? key, required this.cameras}) : super(key: key);
+  const BaseView({Key? key}) : super(key: key);
 
-  final List<CameraDescription> cameras;
   @override
   Widget build(BuildContext context) {
-    final List _page = [
-      homeView(cameras: cameras),
-      recordView(),
-      itemView(),
-      userView()
-    ];
+    final List _page = [homeView(), recordView(), itemView(), userView()];
     PageProvider pageProvider = Provider.of<PageProvider>(context);
     print('basicstructure');
     return Scaffold(
@@ -30,7 +23,7 @@ class BaseView extends StatelessWidget {
             color: Colors.red,
           ),
           title: Text(
-            '넌 이미 운동을 하고 있다',
+            '득근득근',
             style: TextStyle(color: Colors.black),
           ),
         ),
