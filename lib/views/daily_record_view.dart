@@ -64,6 +64,11 @@ class _DailyRecordViewState extends State<DailyRecordView> {
   }
 
   Future<void> saveDate() async {
+    // 빈 입력인 경우 잡아주기
+    if (dailyRecord.isEmpty) {
+      return showToast("기록을 입력하신 후 저장을 눌러주세요");
+    }
+
     // 오늘 날짜 구하기
     var unixTimestamp = DateTime.now();
     String today = unixTimestamp.year.toString() +
@@ -73,11 +78,18 @@ class _DailyRecordViewState extends State<DailyRecordView> {
         unixTimestamp.day.toString();
 
     var documentSnapshot = await user.doc(uid).get();
+
+    showToast("오늘의 기록이 잘 입력되었습니다");
     // 현재 uid로 기록된 유저가 없는 경우
     if (documentSnapshot.data() == null) {
       Map<String, dynamic> newRecord =
           Record(uid: uid, exercise: [dailyRecord], time: [today]).toJson();
       String jsonRecord = jsonEncode(newRecord);
+
+      setState(() {
+        dailyRecord.clear();
+      });
+
       return user
           .doc(uid)
           .set({'record': jsonRecord})
@@ -100,6 +112,9 @@ class _DailyRecordViewState extends State<DailyRecordView> {
     realRecord.exercise.add(dailyRecord);
     realRecord.time.add(today);
 
+    setState(() {
+      dailyRecord.clear();
+    });
     return user
         .doc(uid)
         .set({'record': jsonEncode(realRecord.toJson())})

@@ -12,7 +12,7 @@ class BaseView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final List _page = [homeView(), recordView(), itemView(), userView()];
+    final List _page = [homeView(), RecordView(), itemView(), userView()];
     PageProvider pageProvider = Provider.of<PageProvider>(context);
     print('basicstructure');
     return Scaffold(
