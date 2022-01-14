@@ -13,12 +13,12 @@ class userView extends StatefulWidget {
 
 class _userViewState extends State<userView> {
   String name = FirebaseAuth.instance.currentUser!.displayName as String;
-  void _sendEmail() async {
+  /*void _sendEmail() async {
     final Email email = Email(
       body: '',
       subject:
     )
-  }
+  }*/
   @override
   Widget build(BuildContext context) {
     return Scaffold(
