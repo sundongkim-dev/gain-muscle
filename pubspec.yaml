@@ -54,6 +54,9 @@ dependencies:
   # kakao login
   flutter_web_auth: ^0.4.0
   uuid: ^3.0.5
+  http: ^0.13.4
+  # For feedback functions
+  flutter_email_sender: ^5.0.2
 
 dev_dependencies:
   flutter_test:
