@@ -1,9 +1,16 @@
 import 'dart:async';
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:gain_muscle/views/gallery_view.dart';
+import 'package:image_gallery_saver/image_gallery_saver.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:gallery_saver/gallery_saver.dart';
+import 'package:image_picker/image_picker.dart';
+import 'dart:developer' as developer;
 
 // A screen that allows users to take a picture using a given camera.
 class TakePictureScreen extends StatefulWidget {
@@ -45,7 +52,7 @@ class TakePictureScreenState extends State<TakePictureScreen> {
       // Get a specific camera from the list of available cameras.
       widget.cameras[cameraIdx],
       // Define the resolution to use.
-      ResolutionPreset.medium,
+      ResolutionPreset.veryHigh,
     );
 
     // Next, initialize the controller. This returns a Future.
@@ -86,9 +93,21 @@ class TakePictureScreenState extends State<TakePictureScreen> {
     }
   }
 
+  void showToast(String str) {
+    Fluttertoast.showToast(
+        msg: str,
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.CENTER,
+        timeInSecForIosWeb: 1,
+        backgroundColor: Colors.black,
+        textColor: Colors.white,
+        fontSize: 16.0);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        resizeToAvoidBottomInset: false,
         appBar: AppBar(
           title: const Text(
             '눈바디',
@@ -107,7 +126,7 @@ class TakePictureScreenState extends State<TakePictureScreen> {
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.done) {
                   // If the Future is complete, display the preview.
-                  return CameraPreview(_controller);
+                  return Flexible(child: CameraPreview(_controller));
                 } else {
                   // Otherwise, display a loading indicator.
                   return const Center(child: CircularProgressIndicator());
@@ -135,6 +154,9 @@ class TakePictureScreenState extends State<TakePictureScreen> {
                     setState(() {
                       capturedImages.add(File(xFile.path));
                     });
+                    developer.log('사진저장주소:${xFile.path}', name: 'camera');
+                    GallerySaver.saveImage(xFile.path);
+                    showToast('사진을 저장했습니다');
                   },
                   child: Container(
                     height: 60,
