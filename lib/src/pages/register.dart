@@ -111,21 +111,45 @@ class _RegisterWidgetState extends State<RegisterWidget> {
     );
   }
   void _register() async {
-    final User? user = (await
-    _auth.createUserWithEmailAndPassword(
-      email: _emailController.text,
-      password: _passwordController.text,
-    )
-    ).user;
-    if (user != null) {
-      setState(() {
-        _success = true;
-        _userEmail = user.email!;
-      });
-    } else {
-      setState(() {
-        _success = true;
-      });
+    try {
+      final User? user = (await
+      _auth.createUserWithEmailAndPassword(
+        email: _emailController.text,
+        password: _passwordController.text,
+      )
+      ).user;
+      if (user != null) {
+        setState(() {
+          _success = true;
+          _userEmail = user.email!;
+        });
+      } else {
+        setState(() {
+          _success = true;
+        });
+      }
+    } on FirebaseAuthException catch (e) {
+      if(e.code == 'email-already-in-use') {
+        print('The account already exists for that email.');
+        Navigator.push(
+          context, MaterialPageRoute(builder: (context) => AlertDialog(
+          title: Text('에러'),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                Text("The account already exists for that email."),
+                Text("다시 설정하세요."),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(onPressed: () {Navigator.of(context).pop();}, child: Text("확인"),),
+            TextButton(onPressed: () {Navigator.of(context).pop();}, child: Text("취소"),),
+          ],
+        ))
+        );
+
+      }
     }
   }
   @override
