@@ -125,6 +125,10 @@ flutter:
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
 
+  - family: gotgam
+    fonts:
+      - asset: assets/fonts/gotgam.ttf
+
   # The following section related to splash screen,
   # For use - flutter pub add flutter_native_splash --dev
   # flutter pub run flutter_native_splash:create
