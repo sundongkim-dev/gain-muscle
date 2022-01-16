@@ -60,6 +60,7 @@ dependencies:
   http: ^0.13.4
   # For feedback functions
   flutter_email_sender: ^5.0.2
+  url_launcher: ^6.0.18
 
 dev_dependencies:
   flutter_test:
