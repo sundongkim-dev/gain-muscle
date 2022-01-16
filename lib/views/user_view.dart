@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_email_sender/flutter_email_sender.dart';
+import 'package:gain_muscle/src/pages/developerInfo.dart';
 
 User? user = FirebaseAuth.instance.currentUser;
 
@@ -143,7 +144,9 @@ class _userViewState extends State<userView> {
                                 primary: Colors.black,
                                 onSurface: Colors.red,
                               ),
-                              onPressed: () {},
+                              onPressed: () {
+                                Navigator.push(context, MaterialPageRoute(builder: (context) => developerInfo()));
+                              },
                               label: Text("개발자 소개"),
                               icon: Icon(Icons.computer),
                             ),
