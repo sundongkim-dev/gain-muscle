@@ -54,6 +54,9 @@ dependencies:
   # kakao login
   flutter_web_auth: ^0.4.0
   uuid: ^3.0.5
+  gallery_saver: ^2.3.2
+  image_gallery_saver: ^1.7.1
+  image_picker: ^0.8.4+4
   http: ^0.13.4
   # For feedback functions
   flutter_email_sender: ^5.0.2
@@ -121,6 +124,10 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
+
+  - family: gotgam
+    fonts:
+      - asset: assets/fonts/gotgam.ttf
 
   # The following section related to splash screen,
   # For use - flutter pub add flutter_native_splash --dev
