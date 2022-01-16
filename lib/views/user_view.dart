@@ -98,7 +98,7 @@ class _userViewState extends State<userView> {
                                 onSurface: Colors.red,
                               ),
                               onPressed: () {
-                                _sendEmail();
+                                //_sendEmail();
                               },
                               label: Text("피드백 보내기"),
                               icon: Icon(Icons.chat),
