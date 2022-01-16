@@ -2,6 +2,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_email_sender/flutter_email_sender.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:gain_muscle/src/pages/developerInfo.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:get/get_navigation/src/extension_navigation.dart';
 
 User? user = FirebaseAuth.instance.currentUser;
 
@@ -14,12 +17,6 @@ class userView extends StatefulWidget {
 
 class _userViewState extends State<userView> {
   String name = FirebaseAuth.instance.currentUser!.displayName as String;
-  /*void _sendEmail() async {
-    final Email email = Email(
-      body: '',
-      subject:
-    )
-  }*/
 
   void showToast(String str) {
     Fluttertoast.showToast(
@@ -32,7 +29,7 @@ class _userViewState extends State<userView> {
         fontSize: 16.0);
   }
 
-  InkWell stuff(String name, IconData icon) {
+  InkWell stuff(String name, IconData icon, Widget widget) {
     return InkWell(
         child: Row(
           children: [
@@ -53,7 +50,7 @@ class _userViewState extends State<userView> {
             )),
           ],
         ),
-        onTap: () => showToast('잘 눌림'));
+        onTap: () => {Get.to(widget)});
   }
 
   @override
@@ -92,7 +89,7 @@ class _userViewState extends State<userView> {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                stuff("프로필 변경하기", Icons.person),
+                stuff("프로필 변경하기", Icons.person, developerInfo()),
                 SizedBox(
                   height: 4,
                 ),
@@ -103,7 +100,7 @@ class _userViewState extends State<userView> {
                 SizedBox(
                   height: 4,
                 ),
-                stuff('컬러 테마 설정', Icons.palette),
+                stuff('컬러 테마 설정', Icons.palette, developerInfo()),
                 SizedBox(
                   height: 4,
                 ),
@@ -114,7 +111,7 @@ class _userViewState extends State<userView> {
                 SizedBox(
                   height: 4,
                 ),
-                stuff('회원 탈퇴하기', Icons.palette),
+                stuff('회원 탈퇴하기', Icons.palette, developerInfo()),
                 SizedBox(
                   height: 20,
                 ),
@@ -122,7 +119,7 @@ class _userViewState extends State<userView> {
                   "\n     쓰담쓰담 한마디\n",
                   style: TextStyle(color: Colors.black45),
                 ),
-                stuff('피드백 보내기', Icons.chat),
+                stuff('피드백 보내기', Icons.chat, developerInfo()),
                 SizedBox(
                   height: 4,
                 ),
@@ -133,7 +130,7 @@ class _userViewState extends State<userView> {
                 SizedBox(
                   height: 4,
                 ),
-                stuff('앱 평점주기 / 리뷰', Icons.thumb_up_alt),
+                stuff('앱 평점주기 / 리뷰', Icons.thumb_up_alt, developerInfo()),
                 SizedBox(
                   height: 20,
                 ),
@@ -141,7 +138,7 @@ class _userViewState extends State<userView> {
                   "\n     득근이와 소통하기\n",
                   style: TextStyle(color: Colors.black45),
                 ),
-                stuff('카페 구경가기', Icons.local_cafe_rounded),
+                stuff('카페 구경가기', Icons.local_cafe_rounded, developerInfo()),
                 SizedBox(
                   height: 4,
                 ),
@@ -152,7 +149,7 @@ class _userViewState extends State<userView> {
                 SizedBox(
                   height: 4,
                 ),
-                stuff('득근이 인스타그램', Icons.camera_alt_outlined),
+                stuff('득근이 인스타그램', Icons.camera_alt_outlined, developerInfo()),
                 SizedBox(
                   height: 4,
                 ),
@@ -163,7 +160,7 @@ class _userViewState extends State<userView> {
                 SizedBox(
                   height: 4,
                 ),
-                stuff('개발자 소개', Icons.computer),
+                stuff('개발자 소개', Icons.computer, developerInfo()),
               ],
             ),
           ),
