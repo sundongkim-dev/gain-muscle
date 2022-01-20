@@ -19,7 +19,7 @@ public class FirebaseConfig {
     @PostConstruct
     public void init() {
         try {
-            FileInputStream serviceAccount =  new FileInputStream("src/main/resources/testsnsloginsecret.json");
+            FileInputStream serviceAccount =  new FileInputStream("src/main/resources/serviceAccountKey.json");
             FirebaseOptions options = FirebaseOptions.builder().setCredentials(GoogleCredentials.fromStream(serviceAccount)).build();
             FirebaseApp.initializeApp(options);
         } catch (FileNotFoundException e) {

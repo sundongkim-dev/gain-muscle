@@ -1,7 +1,5 @@
 import 'dart:convert';
-
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_signin_button/button_builder.dart';
 import 'package:flutter_signin_button/button_list.dart';
@@ -12,6 +10,8 @@ import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:uuid/uuid.dart';
 import 'package:flutter_web_auth/flutter_web_auth.dart';
 import 'package:http/http.dart' as http;
+
+import 'loginFunc.dart';
 
 final FirebaseAuth _auth = FirebaseAuth.instance;
 
@@ -73,6 +73,7 @@ class _LoginWidgetState extends State<LoginWidget> {
       }
     }
   }
+
   void signInWithEmail() async {
     try{
       UserCredential userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(
@@ -89,57 +90,7 @@ class _LoginWidgetState extends State<LoginWidget> {
       print(e);
     }
   }
-  Future<UserCredential> signInWithKakao() async {
-    final clientState = Uuid().v4();
-    final url = Uri.https('kauth.kakao.com', '/oauth/authorize', {
-      'response_type' : 'code',
-      'client_id': 'f43889a10dc29482de528eaac3428128',
-      'response_mode': 'form_post',
-      'redirect_url': 'https://airy-shelled-double.glitch.me/callbacks/kakao/sign_in',
-      //'redirect_uri': 'http://172.30.1.41:8080/kakao/sign_in',
-      //'redirect_uri': 'http://172.17.64.1:8080/kakao/sign_in',
-      'state': clientState,
-    });
-    final result = await FlutterWebAuth.authenticate(
-        url: url.toString(),
-        callbackUrlScheme: "webauthcallback"
-    );
-    final body = Uri.parse(result).queryParameters;
-    print(body["code"]);
 
-    final tokenUrl = Uri.https('kauth.kakao.com', '/oauth/token', {
-      'grant_type': 'authorization_code',
-      'client_id': "f43889a10dc29482de528eaac3428128",
-      'redirect_uri':
-      '<카카오에 등록한 authrization_code 받을 return uri 입력>',
-      'code': body["code"],
-    });
-    var responseTokens = await http.post(tokenUrl);
-    Map<String, dynamic> bodys = json.decode(responseTokens.body);
-    var response = await http.post(
-        Uri.parse("https://airy-shelled-double.glitch.me/callbacks/kakao/token"),
-        body: {"accessToken": bodys['access_token']});
-    return FirebaseAuth.instance.signInWithCustomToken(response.body);
-  }
-  /*Future<UserCredential> signInWithKakao() async {
-    final clientState = Uuid().v4();
-    final url = Uri.https('kauth.kakao.com', '/oauth/authorize', {
-      'response_type' : 'code',
-      'client_id': 'f43889a10dc29482de528eaac3428128',
-      'redirect_uri': 'http://172.30.1.41:8080/kakao/sign_in',
-      //'redirect_uri': 'http://172.17.64.1:8080/kakao/sign_in',
-      'state': clientState,
-    });
-    final result = await FlutterWebAuth.authenticate(
-        url: url.toString(),
-        callbackUrlScheme: "webauthcallback"
-    );
-
-    final params = Uri.parse(result).queryParameters;
-    print(params);
-
-    return FirebaseAuth.instance.signInWithCustomToken(params['customToken']!);
-  }*/
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -283,7 +234,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                                 child: SignInButton(
                                   Buttons.Google,
                                   text: "Naver",
-                                  onPressed: () {},
+                                  onPressed: () {}, //signInWithNaver,
                                 )),
                           ],
                         ),

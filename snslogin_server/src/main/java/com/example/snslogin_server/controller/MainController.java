@@ -25,7 +25,7 @@ public class MainController
     @RequestMapping("kakao/sign_in")
     public String kakaoSignIn(@RequestParam("code") String code) {
         System.out.println("kakaoSignIn");
-        Map<String,Object> result = kakaoService.execKakaoLogin(code);
+        Map<String,Object> result = kakaoService.execKaKaoLogin(code);
         return "redirect:webauthcallback://success?customToken="+result.get("customToken").toString();
     }
 }
