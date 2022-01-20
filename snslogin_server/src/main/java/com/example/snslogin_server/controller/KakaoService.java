@@ -27,9 +27,9 @@ import com.google.firebase.auth.UserRecord.UpdateRequest;
 public class KakaoService {
     
     // getAccessToken과 getUserInfo 호출
-    public Map<String, Object> execKakaoLogin(String authorize_code)
+    /*public Map<String, Object> execKakaoLogin(String authorize_code)
     {
-        System.out.println("123");
+        System.out.println("123123");
         Map<String, Object> result = new HashMap<String, Object>();
         // 엑세스 토큰 받기
         String accessToken = getKakaoAccessToken(authorize_code);
@@ -40,31 +40,92 @@ public class KakaoService {
         result.put("userInfo", userInfo);
 
         System.out.println(userInfo.toString());
-        // Firebase customToken 발급
-        if(userInfo != null)
-        {
-            try {
-                result.put("customToken", createFirebaseCustomToken(userInfo));
-                result.put("errYn", "N");
-                result.put("errMsg", "");
-            } catch (FirebaseAuthException e) {
-                // firebase 로그인 에러
-                result.put("errYn", "Y");
-                result.put("errMsg", "FirebaseException : "+ e.getMessage());
-            } catch(Exception e) {
-                result.put("errYn", "Y");
-                result.put("errMsg", "Exception : "+ e.getMessage());
-            }
-        }
-        else
-        {
-            // 카카오 로그인 취소 or 실패
-            result.put("errYn", "Y");
-            result.put("errMsg", "Kakao Login Fail");
-        }
+        return result;
+    }*/
+    public Map<String, Object> execKaKaoLogin(String authorize_code)
+    {
+        Map<String, Object> result = new HashMap<String, Object>();
+        String accessToken = getAccessToken(authorize_code);
+        result.put("accessToken", accessToken);
+        Map<String,Object> userInfo = getUserInfo(accessToken);
+        result.put("userInfo", userInfo);
+        System.out.println(userInfo.toString());
         return result;
     }
 
+    public String getAccessToken (String authorize_code) {
+        String access_Token = "";
+        String refresh_Token = "";
+        String reqURL = "https://kauth.kakao.com/oauth/token";
+        try {
+            URL url = new URL(reqURL);
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            // POST 요청을 위해 기본값이 false인 setDoOutput을 true로
+            conn.setRequestMethod("POST");
+            conn.setDoOutput(true);
+            // POST 요청에 필요로 요구하는 파라미터 스트림을 통해 전송
+            BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(conn.getOutputStream()));
+            StringBuilder sb = new StringBuilder();
+            sb.append("grant_type=authorization_code");
+            sb.append("&client_id=c2d358c9b44921bce63cdd0bdc042652");  //본인이 발급받은 key
+            // 설정 redirect_uri 는 카카오에 등록된 경로를 작성하면 된다.
+            sb.append("&redirect_uri=http://172.30.1.41:8080/kakao/sign_in"); // 본인이 설정해 놓은 경로
+            sb.append("&code=" + authorize_code);
+            bw.write(sb.toString());
+            bw.flush();
+            // 결과 코드가 200이라면 성공
+            int responseCode = conn.getResponseCode();
+            // 요청을 통해 얻은 JSON타입의 Response 메세지 읽어오기
+            BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+            String line = "";
+            String result = "";
+            while ((line = br.readLine()) != null) {
+                result += line;
+            }
+            // Gson 라이브러리에 포함된 클래스로 JSON파싱 객체 생성
+            JsonElement element = JsonParser.parseString(result);
+            access_Token = element.getAsJsonObject().get("access_token").getAsString();
+            refresh_Token = element.getAsJsonObject().get("refresh_token").getAsString();
+            br.close();
+            bw.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return access_Token;
+    }
+    public Map<String, Object> getUserInfo (String access_Token) {
+        //    요청하는 클라이언트마다 가진 정보가 다를 수 있기에 HashMap타입으로 선언
+        Map<String, Object> userInfo = new HashMap<>();
+        String reqURL = "https://kapi.kakao.com/v2/user/me";
+        try {
+            URL url = new URL(reqURL);
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setRequestMethod("GET");
+            //    요청에 필요한 Header에 포함될 내용
+            conn.setRequestProperty("Authorization", "Bearer " + access_Token);
+            int responseCode = conn.getResponseCode();
+            BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+            String line = "";
+            String result = "";
+            while ((line = br.readLine()) != null) {
+                result += line;
+            }
+            JsonElement element = JsonParser.parseString(result);
+            JsonObject properties = element.getAsJsonObject().get("properties").getAsJsonObject();
+            JsonObject kakao_account = element.getAsJsonObject().get("kakao_account").getAsJsonObject();
+            String nickname = properties.getAsJsonObject().get("nickname").getAsString();
+            String profile_image = properties.getAsJsonObject().get("profile_image").getAsString();
+            String email = kakao_account.getAsJsonObject().get("email").getAsString();
+            userInfo.put("nickname", nickname);
+            userInfo.put("email", email);
+            userInfo.put("profile_image", profile_image);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return userInfo;
+    }
+
+    /*
     public String getKakaoAccessToken (String authorize_code)
     {
         String access_Token = "";
@@ -83,9 +144,8 @@ public class KakaoService {
             BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(conn.getOutputStream()));
             StringBuilder sb = new StringBuilder();
             sb.append("grant_type=authorization_code");
-            sb.append("&client_id=f43889a10dc29482de528eaac3428128");  //본인이 발급받은 key
+            sb.append("&client_id=c2d358c9b44921bce63cdd0bdc042652");  //본인이 발급받은 key
             sb.append("&redirect_uri=http://172.30.1.41:8080/kakao/sign_in"); // 본인이 설정해 놓은 경로
-            //http://172.17.64.1:8080/kakao/sign_in
 
             sb.append("&code=" + authorize_code);
             bw.write(sb.toString());
@@ -117,7 +177,9 @@ public class KakaoService {
         }
         return access_Token;
     }
+    */
 
+    /*
     public Map<String, Object> getKakaoUserInfo (String access_Token)
     {
         //  요청하는 클라이언트마다 가진 정보가 다를 수 있기에 HashMap타입으로 선언
@@ -160,7 +222,9 @@ public class KakaoService {
 
         return userInfo;
     }
+    */
 
+    /*
     public String kakaoLogout(String access_Token) {
         String reqURL = "https://kapi.kakao.com/v1/user/logout";
         try {
@@ -223,4 +287,5 @@ public class KakaoService {
         // 2. 전달받은 user 정보로 CustomToken을 발행한다.
         return FirebaseAuth.getInstance().createCustomToken(userRecord.getUid());
     }
+    */
 }
