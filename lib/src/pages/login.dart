@@ -234,7 +234,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                                 child: SignInButton(
                                   Buttons.Google,
                                   text: "Naver",
-                                  onPressed: () {}, //signInWithNaver,
+                                  onPressed: signInWithNaver,
                                 )),
                           ],
                         ),
