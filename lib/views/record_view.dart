@@ -16,91 +16,86 @@ class RecordView extends StatefulWidget {
 }
 
 class _RecordViewState extends State<RecordView> {
-  CollectionReference user = FirebaseFirestore.instance.collection('user');
-  FirebaseAuth auth = FirebaseAuth.instance;
-  String uid = FirebaseAuth.instance.currentUser!.uid;
-  Record record =
-      Record(uid: '', exercise: [''], time: ['']); // 밑에서 갱신해주므로 쓰레기값으로 만듬
+  String userName = FirebaseAuth.instance.currentUser!.displayName as String;
+  List<List<dynamic>> record = [];
+  List<String> date = [];
 
-  Future<Record> initialize() async {
-    // 아직 유저기록이 없을때도 핸들링해줘야함. 이거 생각해보기!
-    var documentSnapshot = await user.doc(uid).get();
-    var data = documentSnapshot.data();
+  Future<void> getData() async {
+    CollectionReference recordDB =
+        FirebaseFirestore.instance.collection('user/$userName/record');
+    // Get docs from collection reference
+    QuerySnapshot querySnapshot = await recordDB.get();
 
-    // 기록이 없을때 구분해주기
-    if (data == null) {
-      return record;
+    // Get data from docs and convert map to List
+    List<Object?> tmpRecord =
+        querySnapshot.docs.map((doc) => doc.data()).toList();
+
+    for (int i = 0; i < tmpRecord.length; i++) {
+      Map<String, dynamic> tmp = tmpRecord[i] as Map<String, dynamic>;
+      record.add(jsonDecode(tmp['data']));
+      date.add(tmp['date']);
     }
-
-    String jsonStr = jsonEncode(data);
-    Map<String, dynamic> rec2 = jsonDecode(jsonStr);
-    Map<String, dynamic> rec3 = jsonDecode(rec2['record']);
-    record = Record.fromJson(rec3);
-    return record;
   }
 
   @override
   Widget build(BuildContext context) {
-    Future<Record> futureRecord = initialize();
-
     return FutureBuilder(
-      future: futureRecord,
-      builder: (context, snapshot) {
-        if (snapshot.hasError) {
-          return Container();
-        }
-        if (snapshot.connectionState == ConnectionState.done) {
-          if (record.uid == '') {
-            // return Container(color: Colors.redAccent);
-            return Center(
+        future: getData(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.done) {
+            // 입력된 기록이 없을때
+            if (record.isEmpty) {
+              return Center(
                 child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text('입력된 기록이 없습니다. 기록을 입력해주세요'),
-                ElevatedButton(
-                    onPressed: () => Get.to(() => DailyRecordView()),
-                    child: Text('기록 입력하러 이동하기')),
-              ],
-            )
-                // Text('아직 운동기록을 입력해주지 않으셨습니다'),
-
-                );
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text('입력된 기록이 없습니다. 기록을 입력해주세요'),
+                    ElevatedButton(
+                        onPressed: () => Get.to(() => DailyRecordView()),
+                        child: Text('기록 입력하러 이동하기')),
+                  ],
+                ),
+              );
+            }
+            // 기록 있을때
+            else {
+              return Scaffold(
+                resizeToAvoidBottomInset: false,
+                body: SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      for (int i = record.length - 1; i >= 0; i--)
+                        ListView.separated(
+                          physics: const NeverScrollableScrollPhysics(),
+                          scrollDirection: Axis.vertical,
+                          shrinkWrap: true,
+                          itemCount: record[i].length + 1,
+                          itemBuilder: (context, index) {
+                            if (index == 0) {
+                              return ListTile(
+                                title: Text(date[i] + '의 운동'),
+                              );
+                            }
+                            return ExerciseTile(
+                                name: record[i][index - 1][0],
+                                weight: record[i][index - 1][1],
+                                rep: record[i][index - 1][2]);
+                          },
+                          separatorBuilder: (context, index) {
+                            // if (index == 0) return SizedBox.shrink();
+                            return Divider();
+                          },
+                        ),
+                    ],
+                  ),
+                ),
+              );
+            }
+          } else {
+            // Otherwise, display a loading indicator.
+            return const Center(child: CircularProgressIndicator());
           }
-          return Scaffold(
-            resizeToAvoidBottomInset: false,
-            body: SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  for (int i = record.time.length - 1; i >= 0; i--)
-                    ListView.separated(
-                      physics: const NeverScrollableScrollPhysics(),
-                      scrollDirection: Axis.vertical,
-                      shrinkWrap: true,
-                      itemCount: record.exercise[i].length + 1,
-                      itemBuilder: (context, index) {
-                        if (index == 0) {
-                          return ListTile(
-                            title: Text(record.time[i] + "의 운동"),
-                          );
-                        }
-                        return ExerciseTile(
-                            name: record.exercise[i][index - 1][0],
-                            weight: record.exercise[i][index - 1][1],
-                            rep: record.exercise[i][index - 1][2]);
-                      },
-                      separatorBuilder: (context, index) {
-                        // if (index == 0) return SizedBox.shrink();
-                        return Divider();
-                      },
-                    ),
-                ],
-              ),
-            ),
-          );
-        }
-        return CircularProgressIndicator();
-      },
-    );
+        });
   }
 }

@@ -58,8 +58,9 @@ dependencies:
   image_gallery_saver: ^1.7.1
   image_picker: ^0.8.4+4
   http: ^0.13.4
-  # For feedback functions
-  flutter_email_sender: ^5.0.2
+  # Url
+  url_launcher: ^6.0.18
+  table_calendar: ^3.0.3
 
 dev_dependencies:
   flutter_test:
@@ -124,6 +125,10 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
+
+  - family: gotgam
+    fonts:
+      - asset: assets/fonts/gotgam.ttf
 
   # The following section related to splash screen,
   # For use - flutter pub add flutter_native_splash --dev
