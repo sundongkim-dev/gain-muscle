@@ -80,6 +80,7 @@ class _DailyRecordViewState extends State<DailyRecordView> {
 
     recordSnapshot.doc(today).set({
       'data': jsonEncode(dailyRecord),
+      'date': today,
     });
 
     setState(() {
