@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:gain_muscle/src/event.dart';
+import 'package:gain_muscle/views/exercise_record_view.dart';
+import 'package:get/get.dart';
+import 'package:http/http.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:intl/intl.dart';
 
@@ -15,7 +18,8 @@ class _calendarViewState extends State<calendarView> {
 
   CalendarFormat _calendarFormat = CalendarFormat.month;
   DateTime _focusedDay = DateTime.now();
-  DateTime? _selectedDay;
+  // DateTime? _selectedDay;
+  DateTime _selectedDay = DateTime.now();
   DateTime kFirstDay = DateTime.utc(2021, 1, 15);
   DateTime kLastDay = DateTime.utc(2025, 1, 20);
 
@@ -53,7 +57,6 @@ class _calendarViewState extends State<calendarView> {
             calendarStyle: CalendarStyle(
               outsideDaysVisible: true,
               weekendTextStyle: TextStyle().copyWith(color: Colors.blue[800]),
-              weekendDecoration: const BoxDecoration(),
               // 오늘 뭐 안뜨게 하려면 기본이랑 똑같게 설정해놔야하는데 나중에 하자 조낸 귀찮다
               todayDecoration: BoxDecoration(shape: BoxShape.circle),
               todayTextStyle: TextStyle(),
@@ -77,8 +80,8 @@ class _calendarViewState extends State<calendarView> {
                 setState(() {
                   print('focused Day $focusedDay');
                   _selectedDay = selectedDay;
-                  _focusedDay = selectedDay;
-                  // _focusedDay = focusedDay;
+                  // _focusedDay = selectedDay;
+                  _focusedDay = focusedDay;
                   print('selected day $selectedDay, focused day $focusedDay');
                 });
               }
@@ -105,24 +108,55 @@ class _calendarViewState extends State<calendarView> {
           //     ],
           //   ),
           // )),
-          ..._getEventsFromDate(_focusedDay).map((Event event) => ListTile(
-                title: Text(
-                  event.title,
+          // ..._getEventsFromDate(_focusedDay).map((Event event) => ListTile(
+          //       title: Text(
+          //         event.title,
+          //       ),
+          //     )),
+          Divider(
+            thickness: 2.0,
+            indent: 10,
+            endIndent: 10,
+          ),
+          Container(
+            // color: Color.,
+            child: Column(
+              children: [
+                SizedBox(
+                  height: 20,
                 ),
-              )),
+                Text(_focusedDay.month.toString() +
+                    "월" +
+                    _focusedDay.day.toString() +
+                    "일"),
+                SizedBox(
+                  height: 20,
+                ),
+                FloatingActionButton.extended(
+                  onPressed: () {
+                    Get.to(() => exerciseRecordView(
+                          selectedDay: _focusedDay,
+                        ));
+                  },
+                  label: Text('득근하러 가기'),
+                  icon: Icon(Icons.shopping_cart),
+                ),
+              ],
+            ),
+          )
         ],
       ),
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: () {
-          if (selectedEvents[_focusedDay] != null) {
-            selectedEvents[_focusedDay]?.add(Event(title: "우하하 오늘의 운동을 더해주마"));
-          } else {
-            selectedEvents[_focusedDay] = [Event(title: "우하하 나도 운동할테다")];
-          }
-        },
-        label: Text('득근하러 가기'),
-        icon: Icon(Icons.shopping_cart),
-      ),
+      // floatingActionButton: FloatingActionButton.extended(
+      //   onPressed: () {
+      //     if (selectedEvents[_focusedDay] != null) {
+      //       selectedEvents[_focusedDay]?.add(Event(title: "우하하 오늘의 운동을 더해주마"));
+      //     } else {
+      //       selectedEvents[_focusedDay] = [Event(title: "우하하 나도 운동할테다")];
+      //     }
+      //   },
+      //   label: Text('득근하러 가기'),
+      //   icon: Icon(Icons.shopping_cart),
+      // ),
     );
   }
 }
