@@ -60,6 +60,8 @@ dependencies:
   http: ^0.13.4
   # Url
   url_launcher: ^6.0.18
+  # For feedback functions
+  flutter_email_sender: ^5.0.2
   table_calendar: ^3.0.3
 
 dev_dependencies:
@@ -89,6 +91,7 @@ flutter:
   assets:
     - assets/Img/loginImages/muscle.png
     - assets/Img/userviewImg/strong.png
+    - assets/Img/userviewImg/chicken.png
   fonts:
   - family: MyFlutterApp
     fonts:

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gain_muscle/views/calendar_view.dart';
 import 'package:gain_muscle/views/record_view.dart';
 import 'package:gain_muscle/views/user_view.dart';
 import 'home_view.dart';
@@ -13,7 +14,13 @@ class BaseView extends StatefulWidget {
 
 class _BaseViewState extends State<BaseView> {
   int _idx = 0;
-  final List _page = [homeView(), RecordView(), itemView(), userView()];
+  final List _page = [
+    calendarView(),
+    homeView(),
+    RecordView(),
+    itemView(),
+    userView()
+  ];
 
   void onTabTapped(int idx) {
     setState(() {
@@ -39,12 +46,14 @@ class _BaseViewState extends State<BaseView> {
       body: _page[_idx],
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
-        backgroundColor: Colors.grey,
-        selectedItemColor: Colors.white,
-        unselectedItemColor: Colors.white.withOpacity(.60),
+        backgroundColor: Colors.white,
+        selectedItemColor: Colors.blue.shade300,
+        unselectedItemColor: Colors.black.withOpacity(.60),
         currentIndex: _idx,
         onTap: onTabTapped,
         items: [
+          BottomNavigationBarItem(
+              icon: Icon(Icons.calendar_today), label: '달력'),
           BottomNavigationBarItem(icon: Icon(Icons.home), label: '홈'),
           BottomNavigationBarItem(icon: Icon(Icons.audiotrack), label: '운동기록'),
           BottomNavigationBarItem(
