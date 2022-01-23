@@ -26,7 +26,7 @@ class _homeViewState extends State<homeView> {
                     // mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Padding(
-                        padding: EdgeInsets.fromLTRB(15, 0, 0, 0),
+                        padding: EdgeInsets.fromLTRB(15, 50, 50, 0),
                         child: TextButton.icon(
                             onPressed: () {
                               Get.to(() => DailyRecordView());

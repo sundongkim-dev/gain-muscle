@@ -58,8 +58,11 @@ dependencies:
   image_gallery_saver: ^1.7.1
   image_picker: ^0.8.4+4
   http: ^0.13.4
+  # Url
+  url_launcher: ^6.0.18
   # For feedback functions
   flutter_email_sender: ^5.0.2
+  table_calendar: ^3.0.3
 
 dev_dependencies:
   flutter_test:
@@ -88,6 +91,7 @@ flutter:
   assets:
     - assets/Img/loginImages/muscle.png
     - assets/Img/userviewImg/strong.png
+    - assets/Img/userviewImg/chicken.png
   fonts:
   - family: MyFlutterApp
     fonts:

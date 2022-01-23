@@ -4,10 +4,12 @@ import 'dart:async';
 import 'package:gain_muscle/src/app.dart';
 import 'package:gain_muscle/src/icons.dart';
 import 'package:get/get.dart';
+import 'package:intl/date_symbol_data_local.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+  await initializeDateFormatting();
   runApp(MyApp());
 }
 
