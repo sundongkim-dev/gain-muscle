@@ -63,6 +63,8 @@ dependencies:
   # For feedback functions
   flutter_email_sender: ^5.0.2
   table_calendar: ^3.0.3
+  #
+  group_button: ^4.1.0
 
 dev_dependencies:
   flutter_test:
