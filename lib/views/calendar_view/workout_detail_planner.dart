@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gain_muscle/views/calendar_view/workout_planner_temp.dart';
 import 'package:get/get.dart';
 import 'package:table_calendar/table_calendar.dart';
 
@@ -20,7 +21,7 @@ class _WorkoutDetailPlannerState extends State<WorkoutDetailPlanner> {
   // 이전 뷰(workout_planner)로 부터 체크된 운동 목록 받아 옴
   final DateTime _selectedDay = Get.arguments['selectedDay'];
   final DateTime _focusedDay = Get.arguments['selectedDay'];
-  final List<Workout> _checkWorkoutList = Get.arguments['checkedWorkoutList'];
+  final List<WorkoutForSearchAndSelect> _workoutList = Get.arguments['workoutList'];
 
   @override
   Widget build(BuildContext context) {
@@ -49,7 +50,7 @@ class _WorkoutDetailPlannerState extends State<WorkoutDetailPlanner> {
                 child: ListView.builder(
                   physics: ClampingScrollPhysics(),
                   shrinkWrap: true,
-                  itemCount: _checkWorkoutList.length,
+                  itemCount: _workoutList.length,
                   itemBuilder: (context, index) {
                     // return ListTile(
                     //   title: Text(_checkWorkoutList[index].toString()),
@@ -62,7 +63,7 @@ class _WorkoutDetailPlannerState extends State<WorkoutDetailPlanner> {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Text(_checkWorkoutList[index].toString()),
+                                Text(_workoutList[index].toString()),
                                 SizedBox(
                                   width: 40.0,
                                   height: 40.0,
@@ -81,7 +82,7 @@ class _WorkoutDetailPlannerState extends State<WorkoutDetailPlanner> {
                               endIndent: 10.0,
                             ),
                             Text('Test'),
-                            Text('세트 / 무게/ 회수'),
+                            Text('세트 / 무게 / 횟수'),
                           ],
                         )
                       ),
