@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gain_muscle/views/calendar_view/workout_planner_temp.dart';
+import 'package:gain_muscle/views/calendar_view/workout_planner.dart';
 import 'package:get/get.dart';
 import 'package:table_calendar/table_calendar.dart';
 
@@ -22,6 +22,48 @@ class _WorkoutDetailPlannerState extends State<WorkoutDetailPlanner> {
   final DateTime _selectedDay = Get.arguments['selectedDay'];
   final DateTime _focusedDay = Get.arguments['selectedDay'];
   final List<WorkoutForSearchAndSelect> _workoutList = Get.arguments['workoutList'];
+
+  // ==========================================
+  // 선택된 운동 출력
+  // ==========================================
+  Widget _printSelectedWorkoutList(int index) {
+    if (_workoutList[index].isSelected) {
+      return Card(
+        child: Padding(
+            padding: EdgeInsets.all(16.0),
+            child: Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(_workoutList[index].toString()),
+                    SizedBox(
+                      width: 40.0,
+                      height: 40.0,
+                      child: FloatingActionButton(
+                        child: Icon(
+                          Icons.delete,
+                        ),
+                        onPressed: () {},
+                      ),
+                    ),
+                  ],
+                ),
+                Divider(
+                  thickness: 2.0,
+                  indent: 10.0,
+                  endIndent: 10.0,
+                ),
+                Text('Test'),
+                Text('세트 / 무게 / 횟수'),
+              ],
+            )
+        ),
+      );
+    }
+
+    return SizedBox.shrink();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -52,41 +94,39 @@ class _WorkoutDetailPlannerState extends State<WorkoutDetailPlanner> {
                   shrinkWrap: true,
                   itemCount: _workoutList.length,
                   itemBuilder: (context, index) {
-                    // return ListTile(
-                    //   title: Text(_checkWorkoutList[index].toString()),
+                    return _printSelectedWorkoutList(index);
+                    // return Card(
+                    //   child: Padding(
+                    //     padding: EdgeInsets.all(16.0),
+                    //     child: Column(
+                    //       children: [
+                    //         Row(
+                    //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    //           children: [
+                    //             Text(_workoutList[index].toString()),
+                    //             SizedBox(
+                    //               width: 40.0,
+                    //               height: 40.0,
+                    //               child: FloatingActionButton(
+                    //                 child: Icon(
+                    //                   Icons.delete,
+                    //                 ),
+                    //                 onPressed: () {},
+                    //               ),
+                    //             ),
+                    //           ],
+                    //         ),
+                    //         Divider(
+                    //           thickness: 2.0,
+                    //           indent: 10.0,
+                    //           endIndent: 10.0,
+                    //         ),
+                    //         Text('Test'),
+                    //         Text('세트 / 무게 / 횟수'),
+                    //       ],
+                    //     )
+                    //   ),
                     // );
-                    return Card(
-                      child: Padding(
-                        padding: EdgeInsets.all(16.0),
-                        child: Column(
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(_workoutList[index].toString()),
-                                SizedBox(
-                                  width: 40.0,
-                                  height: 40.0,
-                                  child: FloatingActionButton(
-                                    child: Icon(
-                                      Icons.delete,
-                                    ),
-                                    onPressed: () {},
-                                  ),
-                                ),
-                              ],
-                            ),
-                            Divider(
-                              thickness: 2.0,
-                              indent: 10.0,
-                              endIndent: 10.0,
-                            ),
-                            Text('Test'),
-                            Text('세트 / 무게 / 횟수'),
-                          ],
-                        )
-                      ),
-                    );
                   },
                 ),
               ),

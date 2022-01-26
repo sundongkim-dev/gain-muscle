@@ -15,35 +15,50 @@ class WorkoutPlanner extends StatefulWidget {
 }
 
 class _WorkoutPlannerState extends State<WorkoutPlanner> {
+  final FocusNode _focusNode = FocusNode();
+
+  // 선택된 날짜
+  final DateTime _selectedDay = Get.arguments;
+
   final TextEditingController _textEditingController = TextEditingController();
 
-  final DateTime _selectedDay = Get.arguments;
+  // 그룹버튼/ 컨트롤러
+  final GroupButtonController _groupButtonController = GroupButtonController();
+  // 그룹버튼/ 텍스트필드 포커스일 때 invisible
+  bool _isGroupButtonVisible = true;
+  // 그룹버튼/ 검색기능
+  final List<String> _buttons = ['Chest', 'Shoulder', 'Back', 'Arm', 'Legs'];
 
   int _selectedWorkoutCounter = 0;
   final List<WorkoutForSearchAndSelect> _workoutList =
       List<WorkoutForSearchAndSelect>.generate(
           workoutList.length,
           (index) => WorkoutForSearchAndSelect(workoutList[index].category,
-              workoutList[index].name, true, false, Colors.white));
-
-  // 그룹버튼, 검색기능
-  final List<String> _buttons = ['Chest', 'Shoulder', 'Back', 'Arm', 'Legs'];
+              workoutList[index].name, true, false, Colors.white, false));
 
   @override
   void initState() {
     super.initState();
+    _focusNode.addListener(_onFocusChanged);
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _focusNode.dispose();
+    _textEditingController.dispose();
+    _groupButtonController.dispose();
   }
 
   // ===========================================
   // #1 검색기능
   // 운동 이름이 검색어를 포함하는지에 따라
-  // isSearched 값 변경
+  // Workout.isSearched 값 변경
   // ==========================================
   void filterSearchResults(String query) {
     if (query.isNotEmpty) {
-      _workoutList.forEach((workout) {
+      for (var workout in _workoutList) {
         if (workout.contains(query)) {
-          print('filter: ${workout.name}');
           setState(() {
             workout.isSearched = true;
           });
@@ -52,23 +67,41 @@ class _WorkoutPlannerState extends State<WorkoutPlanner> {
             workout.isSearched = false;
           });
         }
-      });
+      }
     } else {
       // 검색어 없을 때
       setState(() {
-        _workoutList.forEach((workout) {
+        for (var workout in _workoutList) {
           workout.isSearched = true;
-        });
+        }
       });
     }
   }
 
+  // ===========================================
+  // #1 그룹버튼 검색 비활성화
+  // 텍스트필드를 이용해 검색할 때 그룹 버튼 비활성화
+  // 텍스트필드 포커스 해제될 때 그룹 버튼 초기화
+  // ** 텍스트 입력 안하고 텍스트필드 X버튼(전체 포커스 해제) 눌러도 초기화 되는데 버튼은 안사라짐
+  // ==========================================
+  void _onFocusChanged() {
+    setState(() {
+      _focusNode.hasFocus
+          ? _isGroupButtonVisible = false
+          : _isGroupButtonVisible = true;
+
+      if (_isGroupButtonVisible) {
+        _groupButtonController.unselectAll();
+      }
+    });
+  }
+
   // ==========================================
   // #2 검색된 운동 목록 출력
-  // (isSearched == true) 출력
+  // (Workout.isSearched == true) 출력
   // ------------------------------------------
   // #3 운동 목록 중 계획에 포함할 운동 선택
-  // isSelected 값 변경
+  // Workout.isSelected 값 변경
   // _selectedWorkoutCounter 조정 (0일 때 버튼 비활성화)
   // ==========================================
   Widget _printSearchedWorkoutList(int index) {
@@ -84,7 +117,7 @@ class _WorkoutPlannerState extends State<WorkoutPlanner> {
             setState(() {
               _workoutList[index].isSelected = !_workoutList[index].isSelected;
               if (_workoutList[index].isSelected) {
-                _workoutList[index].color = Colors.blue;
+                _workoutList[index].color = Colors.lightBlue.shade50;
                 _selectedWorkoutCounter++;
               } else {
                 _workoutList[index].color = Colors.white;
@@ -92,6 +125,18 @@ class _WorkoutPlannerState extends State<WorkoutPlanner> {
               }
             });
           },
+          trailing: IconButton(
+            icon: _workoutList[index].isFavorite
+                ? Icon(Icons.favorite)
+                : Icon(Icons.favorite_border),
+            color: _workoutList[index].isFavorite ? Colors.red : null,
+            onPressed: () {
+              setState(() {
+                _workoutList[index].isFavorite =
+                    !_workoutList[index].isFavorite;
+              });
+            },
+          ),
         ),
       );
     }
@@ -100,6 +145,7 @@ class _WorkoutPlannerState extends State<WorkoutPlanner> {
 
   // ==========================================
   // #3 선택된 운동 없을 때 장바구니 안보임
+  // ------------------------------------------
   // #4 선택된 운동 없을 때 버튼 비활성화
   // ==========================================
   bool _isVisible() {
@@ -108,14 +154,15 @@ class _WorkoutPlannerState extends State<WorkoutPlanner> {
 
   // ==========================================
   // #3 선택된 운동 장바구니
-  // (isSelected == true) 운동 출력
+  // (Workout.isSelected == true) 운동 출력
+  // X버튼 클릭으로 운동 선택 해제
   // ==========================================
   Widget _printSelectedWorkoutList(int index) {
     if (_workoutList[index].isSelected) {
       return Row(
         children: [
           Text(_workoutList[index].name),
-          ElevatedButton(
+          IconButton(
             onPressed: () {
               setState(() {
                 _workoutList[index].isSelected = false;
@@ -123,10 +170,7 @@ class _WorkoutPlannerState extends State<WorkoutPlanner> {
                 _selectedWorkoutCounter--;
               });
             },
-            child: Icon(Icons.clear),
-            style: ElevatedButton.styleFrom(
-              shape: CircleBorder(),
-            ),
+            icon: Icon(Icons.clear),
           ),
         ],
       );
@@ -155,14 +199,23 @@ class _WorkoutPlannerState extends State<WorkoutPlanner> {
                 children: [
                   // 검색 텍스트 에디터
                   TextField(
+                    focusNode: _focusNode,
                     controller: _textEditingController,
                     onChanged: (value) {
                       filterSearchResults(value);
                     },
                     decoration: InputDecoration(
                       labelText: 'Search',
-                      hintText: 'Search',
+                      hintText: '운동 검색',
                       prefixIcon: Icon(Icons.search),
+                      suffixIcon: IconButton(
+                        icon: Icon(Icons.clear),
+                        onPressed: () {
+                          _textEditingController.clear();
+                          filterSearchResults('');
+                          FocusScope.of(context).unfocus();
+                        },
+                      ),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.all(
                           Radius.circular(25.0),
@@ -171,13 +224,17 @@ class _WorkoutPlannerState extends State<WorkoutPlanner> {
                     ),
                   ),
                   // 버튼 검색 (미구현)
-                  SingleChildScrollView(
-                    scrollDirection: Axis.horizontal,
-                    child: GroupButton(
-                      buttons: _buttons,
-                      onSelected: (index, isSelected) {
-                        filterSearchResults(_buttons[index]);
-                      },
+                  Visibility(
+                    visible: _isGroupButtonVisible,
+                    child: SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: GroupButton(
+                        controller: _groupButtonController,
+                        buttons: _buttons,
+                        onSelected: (index, isSelected) {
+                          filterSearchResults(_buttons[index]);
+                        },
+                      ),
                     ),
                   ),
                 ],
@@ -235,17 +292,15 @@ class _WorkoutPlannerState extends State<WorkoutPlanner> {
             padding: EdgeInsets.all(10.0),
             child: ElevatedButton(
               child: Text('Button Test'),
-              onPressed: () {},
-              //
-              // onPressed: _isVisible()
-              //     ? () => Get.to(
-              //           WorkoutDetailPlanner(),
-              //           arguments: {
-              //             'selectedDay': _selectedDay,
-              //             'workoutList': _workoutList,
-              //           },
-              //         )
-              //     : null,
+              onPressed: _isVisible()
+                  ? () => Get.to(
+                        WorkoutDetailPlanner(),
+                        arguments: {
+                          'selectedDay': _selectedDay,
+                          'workoutList': _workoutList,
+                        },
+                      )
+                  : null,
             ),
           ),
         ],
@@ -258,8 +313,9 @@ class WorkoutForSearchAndSelect extends Workout {
   bool isSearched;
   bool isSelected;
   Color color;
+  bool isFavorite = false;
 
   WorkoutForSearchAndSelect(String category, String name, this.isSearched,
-      this.isSelected, this.color)
+      this.isSelected, this.color, this.isFavorite)
       : super(category, name);
 }
