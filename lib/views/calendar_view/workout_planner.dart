@@ -34,6 +34,11 @@ class _WorkoutPlannerState extends State<WorkoutPlanner> {
     super.initState();
   }
 
+  // ===========================================
+  // #1 검색기능
+  // 운동 이름이 검색어를 포함하는지에 따라
+  // isSearched 값 변경
+  // ==========================================
   void filterSearchResults(String query) {
     if (query.isNotEmpty) {
       _workoutList.forEach((workout) {
@@ -58,6 +63,14 @@ class _WorkoutPlannerState extends State<WorkoutPlanner> {
     }
   }
 
+  // ==========================================
+  // #2 검색된 운동 목록 출력
+  // (isSearched == true) 출력
+  // ------------------------------------------
+  // #3 운동 목록 중 계획에 포함할 운동 선택
+  // isSelected 값 변경
+  // _selectedWorkoutCounter 조정 (0일 때 버튼 비활성화)
+  // ==========================================
   Widget _printSearchedWorkoutList(int index) {
     if (_workoutList[index].isSearched) {
       return Padding(
@@ -85,10 +98,18 @@ class _WorkoutPlannerState extends State<WorkoutPlanner> {
     return SizedBox.shrink();
   }
 
+  // ==========================================
+  // #3 선택된 운동 없을 때 장바구니 안보임
+  // #4 선택된 운동 없을 때 버튼 비활성화
+  // ==========================================
   bool _isVisible() {
     return (_selectedWorkoutCounter != 0) ? true : false;
   }
 
+  // ==========================================
+  // #3 선택된 운동 장바구니
+  // (isSelected == true) 운동 출력
+  // ==========================================
   Widget _printSelectedWorkoutList(int index) {
     if (_workoutList[index].isSelected) {
       return Row(
@@ -124,7 +145,7 @@ class _WorkoutPlannerState extends State<WorkoutPlanner> {
       body: Column(
         children: [
           // ==========================================
-          // 검색 기능
+          // [#1] - 검색 기능
           // ==========================================
           Container(
             color: Colors.blue[50],
@@ -165,7 +186,7 @@ class _WorkoutPlannerState extends State<WorkoutPlanner> {
           ),
 
           // ==========================================
-          // Expanded#1 - 검색된 운동 목록 출력
+          // [#2] - 검색된 운동 목록 출력
           // ==========================================
           Expanded(
             flex: 6,
@@ -179,14 +200,14 @@ class _WorkoutPlannerState extends State<WorkoutPlanner> {
               },
             ),
           ),
-          Divider(
-            thickness: 2.0,
-            indent: 10,
-            endIndent: 10,
-          ),
+          // Divider(
+          //   thickness: 2.0,
+          //   indent: 10,
+          //   endIndent: 10,
+          // ),
 
           // ==========================================
-          // Expanded#2 - 선택된 운동 목록 출력 (+삭제 기능)
+          // [#3] - 선택된 운동 목록 출력 (+삭제 기능)
           // ==========================================
           Visibility(
             visible: _isVisible(),
@@ -198,18 +219,24 @@ class _WorkoutPlannerState extends State<WorkoutPlanner> {
                 itemCount: _workoutList.length,
                 itemBuilder: (context, index) {
                   return Container(
-                    color: Colors.blue[50],
+                    color: Colors.purple,
                     child: _printSelectedWorkoutList(index),
                   );
                 },
               ),
             ),
           ),
-          Padding(
+
+          // ==========================================
+          // [#4] - 세부 계획 입력 뷰 이동
+          // ==========================================
+          Container(
+            color: Colors.green,
             padding: EdgeInsets.all(10.0),
             child: ElevatedButton(
               child: Text('Button Test'),
               onPressed: () {},
+              //
               // onPressed: _isVisible()
               //     ? () => Get.to(
               //           WorkoutDetailPlanner(),
@@ -223,10 +250,6 @@ class _WorkoutPlannerState extends State<WorkoutPlanner> {
           ),
         ],
       ),
-      // floatingActionButton: ElevatedButton(
-      //   child: Text('Button Test'),
-      //   onPressed: () {},
-      // ),
     );
   }
 }
