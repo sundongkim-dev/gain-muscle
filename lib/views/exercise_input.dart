@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gain_muscle/src/controller.dart';
+import 'package:gain_muscle/views/daily_input_view.dart';
 import 'package:get/get.dart';
 
 class exerciseInputView extends StatefulWidget {
@@ -120,7 +121,7 @@ class _exerciseInputViewState extends State<exerciseInputView> {
                       backgroundColor: Colors.white,
                       foregroundColor: Colors.black,
                       onPressed: () async {
-                        Get.to(() => exerciseInputView(today: widget.today));
+                        Get.to(() => DailyInputView(today: widget.today));
                         setState(() {});
                       },
                       label: Text('운동 담기(${_.exerciseBasket.length})'),
