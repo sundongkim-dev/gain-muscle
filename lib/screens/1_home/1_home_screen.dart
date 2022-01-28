@@ -1,7 +1,7 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
-import 'package:gain_muscle/views/camera_view.dart';
-import 'package:gain_muscle/views/daily_record_view.dart';
+import 'package:gain_muscle/tmp/camera_view.dart';
+import 'package:gain_muscle/tmp/daily_record_view.dart';
 import 'package:get/get.dart';
 
 class homeView extends StatefulWidget {

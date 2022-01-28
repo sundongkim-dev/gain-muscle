@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:gain_muscle/src/pages/login.dart';
-import 'package:gain_muscle/views/base_view.dart';
+import 'package:gain_muscle/screens/0_login/1_login_screen.dart';
+import 'package:gain_muscle/screens/0_login/2_base_screen.dart';
 
-class Home extends StatelessWidget {
-  const Home({Key? key}) : super(key: key);
+class chkAuth extends StatelessWidget {
+  const chkAuth({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

@@ -2,7 +2,6 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:gain_muscle/src/app.dart';
-import 'package:gain_muscle/src/icons.dart';
 import 'package:get/get.dart';
 import 'package:intl/date_symbol_data_local.dart';
 

@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:gain_muscle/views/calendar_view.dart';
-import 'package:gain_muscle/views/record_view.dart';
-import 'package:gain_muscle/views/user_view.dart';
-import 'home_view.dart';
-import 'item_view.dart';
+
+import '../1_home/1_home_screen.dart';
+import '../2_statistic/1_record_screen.dart';
+import '../3_calendar/1_calendar_screen.dart';
+import '../4_item/1_item_screen.dart';
+import '../5_userInfo/1_userInfo_screen.dart';
 
 class BaseView extends StatefulWidget {
   const BaseView({Key? key}) : super(key: key);
