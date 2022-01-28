@@ -1,7 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:gain_muscle/services/1_firebase_initialize.dart';
 import 'dart:async';
-import 'package:gain_muscle/src/app.dart';
 import 'package:get/get.dart';
 import 'package:intl/date_symbol_data_local.dart';
 

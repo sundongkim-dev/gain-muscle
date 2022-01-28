@@ -1,8 +1,9 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
-import 'package:gain_muscle/tmp/camera_view.dart';
 import 'package:gain_muscle/tmp/daily_record_view.dart';
 import 'package:get/get.dart';
+
+import '2_camera_view.dart';
 
 class homeView extends StatefulWidget {
   const homeView({Key? key}) : super(key: key);
