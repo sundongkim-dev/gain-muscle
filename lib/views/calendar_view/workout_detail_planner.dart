@@ -95,38 +95,6 @@ class _WorkoutDetailPlannerState extends State<WorkoutDetailPlanner> {
                   itemCount: _workoutList.length,
                   itemBuilder: (context, index) {
                     return _printSelectedWorkoutList(index);
-                    // return Card(
-                    //   child: Padding(
-                    //     padding: EdgeInsets.all(16.0),
-                    //     child: Column(
-                    //       children: [
-                    //         Row(
-                    //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    //           children: [
-                    //             Text(_workoutList[index].toString()),
-                    //             SizedBox(
-                    //               width: 40.0,
-                    //               height: 40.0,
-                    //               child: FloatingActionButton(
-                    //                 child: Icon(
-                    //                   Icons.delete,
-                    //                 ),
-                    //                 onPressed: () {},
-                    //               ),
-                    //             ),
-                    //           ],
-                    //         ),
-                    //         Divider(
-                    //           thickness: 2.0,
-                    //           indent: 10.0,
-                    //           endIndent: 10.0,
-                    //         ),
-                    //         Text('Test'),
-                    //         Text('세트 / 무게 / 횟수'),
-                    //       ],
-                    //     )
-                    //   ),
-                    // );
                   },
                 ),
               ),

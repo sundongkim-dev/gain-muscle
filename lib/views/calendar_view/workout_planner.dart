@@ -264,7 +264,7 @@ class _WorkoutPlannerState extends State<WorkoutPlanner> {
           // ),
 
           // ==========================================
-          // [#3] - 선택된 운동 목록 출력 (+삭제 기능)
+          // [#3] - 선택된 운동 목록 출력 장바구니
           // ==========================================
           Visibility(
             visible: _isVisible(),
