@@ -91,9 +91,8 @@ flutter:
   # the material Icons class.
   uses-material-design: true
   assets:
-    - assets/Img/loginImages/muscle.png
-    - assets/Img/userviewImg/strong.png
-    - assets/Img/userviewImg/chicken.png
+    - assets/Img/userviewImg/
+
   fonts:
   - family: MyFlutterApp
     fonts:
