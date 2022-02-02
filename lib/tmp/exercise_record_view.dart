@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:gain_muscle/src/controller.dart';
-import 'package:gain_muscle/views/exercise_input.dart';
-import 'package:gain_muscle/views/load_exercise_view.dart';
+import 'package:gain_muscle/tmp/controller.dart';
 import 'package:get/get.dart';
 import 'package:table_calendar/table_calendar.dart';
+
+import 'exercise_input.dart';
+import 'load_exercise_view.dart';
 
 class exerciseRecordView extends StatefulWidget {
   const exerciseRecordView({Key? key, required this.selectedDay})
@@ -43,7 +44,7 @@ class _exerciseRecordViewState extends State<exerciseRecordView> {
               focusedDay: _focusedDay,
               startingDayOfWeek: StartingDayOfWeek.monday,
               calendarFormat: _calendarFormat,
-              availableCalendarFormats: {CalendarFormat.week: 'Week'},
+              availableCalendarFormats: {CalendarFormat.week: 'Week', CalendarFormat.month: 'Month'},
               headerStyle: HeaderStyle(
                 formatButtonVisible: false,
                 headerMargin:

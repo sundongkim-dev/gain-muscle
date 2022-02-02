@@ -1,6 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:gain_muscle/src/pages/home.dart';
+import '2_check_auth.dart';
 
 class App extends StatelessWidget {
   const App({Key? key}) : super(key: key);
@@ -19,7 +19,7 @@ class App extends StatelessWidget {
 
         if (snapshot.connectionState == ConnectionState.done) {
           // firebase 연결 성공
-          return Home();
+          return chkAuth();
         }
         return CircularProgressIndicator();
       },

@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:gain_muscle/src/event.dart';
-import 'package:gain_muscle/views/exercise_record_view.dart';
+import 'package:gain_muscle/tmp/event.dart';
+import 'package:gain_muscle/tmp/exercise_record_view.dart';
 import 'package:get/get.dart';
-import 'package:http/http.dart';
 import 'package:table_calendar/table_calendar.dart';
-import 'package:intl/intl.dart';
 
 class calendarView extends StatefulWidget {
   const calendarView({Key? key}) : super(key: key);

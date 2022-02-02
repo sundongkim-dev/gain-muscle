@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:gain_muscle/views/calendar_view.dart';
-import 'package:gain_muscle/views/record_view.dart';
-import 'package:gain_muscle/views/user_view.dart';
-import 'home_view.dart';
-import 'item_view.dart';
+
+import '../1_home/1_home_screen.dart';
+import '../2_statistic/1_record_screen.dart';
+import '../3_calendar/1_calendar_screen.dart';
+import '../4_item/1_item_screen.dart';
+import '../5_userInfo/1_userInfo_screen.dart';
 
 class BaseView extends StatefulWidget {
   const BaseView({Key? key}) : super(key: key);
@@ -15,9 +16,9 @@ class BaseView extends StatefulWidget {
 class _BaseViewState extends State<BaseView> {
   int _idx = 0;
   final List _page = [
-    calendarView(),
     homeView(),
     RecordView(),
+    calendarView(),
     itemView(),
     userView()
   ];
@@ -52,10 +53,10 @@ class _BaseViewState extends State<BaseView> {
         currentIndex: _idx,
         onTap: onTabTapped,
         items: [
-          BottomNavigationBarItem(
-              icon: Icon(Icons.calendar_today), label: '달력'),
           BottomNavigationBarItem(icon: Icon(Icons.home), label: '홈'),
           BottomNavigationBarItem(icon: Icon(Icons.audiotrack), label: '운동기록'),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.calendar_today), label: '달력'),
           BottomNavigationBarItem(
               icon: Icon(Icons.beach_access), label: '아이템,칭호'),
           BottomNavigationBarItem(icon: Icon(Icons.favorite), label: '사용자계정'),

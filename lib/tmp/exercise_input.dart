@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gain_muscle/src/controller.dart';
-import 'package:gain_muscle/views/daily_input_view.dart';
+import 'package:gain_muscle/tmp/controller.dart';
 import 'package:get/get.dart';
 
 class exerciseInputView extends StatefulWidget {

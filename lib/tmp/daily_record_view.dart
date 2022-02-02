@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:gain_muscle/src/icons.dart';
+import 'package:gain_muscle/tmp/icons.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../utils.dart';
 
