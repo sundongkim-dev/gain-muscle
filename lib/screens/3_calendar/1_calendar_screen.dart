@@ -13,11 +13,11 @@ class calendarView extends StatefulWidget {
 
 class _calendarViewState extends State<calendarView> {
   Map<DateTime, List<Event>> selectedEvents = {};
-
   CalendarFormat _calendarFormat = CalendarFormat.month;
   DateTime _focusedDay = DateTime.now();
-  // DateTime? _selectedDay;
   DateTime _selectedDay = DateTime.now();
+
+  // 선택 가능 날짜 임의 지정
   DateTime kFirstDay = DateTime.utc(2021, 1, 15);
   DateTime kLastDay = DateTime.utc(2025, 1, 20);
 
