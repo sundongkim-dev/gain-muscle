@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:gain_muscle/tmp/controller.dart';
 import 'package:get/get.dart';
 
+import 'daily_input_view.dart';
+
 class exerciseInputView extends StatefulWidget {
   const exerciseInputView({Key? key, required this.today}) : super(key: key);
 

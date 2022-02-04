@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:gain_muscle/src/controller.dart';
 import 'package:get/get.dart';
 
+import 'controller.dart';
+
 class DailyInputView extends StatefulWidget {
   const DailyInputView({Key? key, required this.today}) : super(key: key);
 
