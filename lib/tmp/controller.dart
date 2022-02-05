@@ -3,8 +3,8 @@ import 'package:get/get.dart';
 
 class Controller extends GetxController {
   var isTodayRest = false;
-
   var index = 0;
+  bool isMonth = true;
 
   List<dynamic> exerciseBasket = [];
 
@@ -175,6 +175,11 @@ class Controller extends GetxController {
       ],
     ),
   ];
+
+  updateFormat(bool flag) {
+    isMonth = flag;
+    update();
+  }
 
   exerciseTapped(int idx) {
     index = idx;

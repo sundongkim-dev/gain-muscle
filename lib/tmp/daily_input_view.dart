@@ -2,7 +2,7 @@ import 'dart:ffi';
 import 'dart:ui';
 import 'package:flutter_spinbox/flutter_spinbox.dart';
 import 'package:flutter/material.dart';
-import 'package:gain_muscle/src/controller.dart';
+import 'package:gain_muscle/tmp/controller.dart';
 import 'package:get/get.dart';
 
 import 'controller.dart';

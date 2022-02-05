@@ -64,6 +64,7 @@ dependencies:
   flutter_email_sender: ^5.0.2
   table_calendar: ^3.0.3
   flutter_spinbox: ^0.8.0
+  group_button: ^4.2.1
 
 dev_dependencies:
   flutter_test:
