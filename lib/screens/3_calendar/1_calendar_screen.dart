@@ -16,8 +16,8 @@ class _calendarViewState extends State<calendarView> {
 
   CalendarFormat _calendarFormat = CalendarFormat.month;
   DateTime _focusedDay = DateTime.now();
-  // DateTime? _selectedDay;
   DateTime _selectedDay = DateTime.now();
+
   DateTime kFirstDay = DateTime.utc(2021, 1, 15);
   DateTime kLastDay = DateTime.utc(2025, 1, 20);
 
@@ -43,6 +43,8 @@ class _calendarViewState extends State<calendarView> {
               headerMargin:
                   EdgeInsets.only(left: 40, top: 10, right: 40, bottom: 10),
               titleCentered: true,
+              //leftChevronVisible: false,
+              //rightChevronVisible: false,
               leftChevronIcon: Icon(Icons.arrow_left),
               rightChevronIcon: Icon(Icons.arrow_right),
             ),
@@ -124,7 +126,7 @@ class _calendarViewState extends State<calendarView> {
                   height: 20,
                 ),
                 Text(_focusedDay.month.toString() +
-                    "월" +
+                    "월 " +
                     _focusedDay.day.toString() +
                     "일"),
                 SizedBox(
