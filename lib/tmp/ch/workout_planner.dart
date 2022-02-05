@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:gain_muscle/src/app.dart';
-import 'package:gain_muscle/views/calendar_view/workout_detail_planner.dart';
+import 'package:gain_muscle/tmp/ch/workout_detail_planner.dart';
 import 'package:get/get.dart';
 import 'package:group_button/group_button.dart';
 import 'package:intl/intl.dart';
-
 import 'temp_workout_list.dart';
 
+// import 'package:gain_muscle/views/calendar_view/workout_detail_planner.dart';
+// import 'package:gain_muscle/src/app.dart';
 class WorkoutPlanner extends StatefulWidget {
   const WorkoutPlanner({Key? key}) : super(key: key);
 
@@ -31,10 +31,10 @@ class _WorkoutPlannerState extends State<WorkoutPlanner> {
 
   int _selectedWorkoutCounter = 0;
   final List<WorkoutForSearchAndSelect> _workoutList =
-  List<WorkoutForSearchAndSelect>.generate(
-      workoutList.length,
+      List<WorkoutForSearchAndSelect>.generate(
+          workoutList.length,
           (index) => WorkoutForSearchAndSelect(workoutList[index].category,
-          workoutList[index].name, true, false, Colors.white, false));
+              workoutList[index].name, true, false, Colors.white, false));
 
   @override
   void initState() {
@@ -133,7 +133,7 @@ class _WorkoutPlannerState extends State<WorkoutPlanner> {
             onPressed: () {
               setState(() {
                 _workoutList[index].isFavorite =
-                !_workoutList[index].isFavorite;
+                    !_workoutList[index].isFavorite;
               });
             },
           ),
@@ -294,12 +294,12 @@ class _WorkoutPlannerState extends State<WorkoutPlanner> {
               child: Text('Button Test'),
               onPressed: _isVisible()
                   ? () => Get.to(
-                WorkoutDetailPlanner(),
-                arguments: {
-                  'selectedDay': _selectedDay,
-                  'workoutList': _workoutList,
-                },
-              )
+                        WorkoutDetailPlanner(),
+                        arguments: {
+                          'selectedDay': _selectedDay,
+                          'workoutList': _workoutList,
+                        },
+                      )
                   : null,
             ),
           ),

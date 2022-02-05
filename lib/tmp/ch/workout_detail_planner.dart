@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:gain_muscle/views/calendar_view/workout_planner.dart';
+import 'package:gain_muscle/tmp/ch/workout_planner.dart';
 import 'package:get/get.dart';
 import 'package:table_calendar/table_calendar.dart';
-
 import 'temp_workout_list.dart';
 
 class WorkoutDetailPlanner extends StatefulWidget {
@@ -21,7 +20,8 @@ class _WorkoutDetailPlannerState extends State<WorkoutDetailPlanner> {
   // 이전 뷰(workout_planner)로 부터 체크된 운동 목록 받아 옴
   final DateTime _selectedDay = Get.arguments['selectedDay'];
   final DateTime _focusedDay = Get.arguments['selectedDay'];
-  final List<WorkoutForSearchAndSelect> _workoutList = Get.arguments['workoutList'];
+  final List<WorkoutForSearchAndSelect> _workoutList =
+      Get.arguments['workoutList'];
 
   // ==========================================
   // 선택된 운동 출력
@@ -57,8 +57,7 @@ class _WorkoutDetailPlannerState extends State<WorkoutDetailPlanner> {
                 Text('Test'),
                 Text('세트 / 무게 / 횟수'),
               ],
-            )
-        ),
+            )),
       );
     }
 
@@ -108,7 +107,7 @@ class _WorkoutDetailPlannerState extends State<WorkoutDetailPlanner> {
               padding: EdgeInsets.fromLTRB(0, 0, 0, 8),
               child: ElevatedButton(
                 child: Text('기록 완료'),
-                onPressed: () { },
+                onPressed: () {},
               ),
             ),
           ],
