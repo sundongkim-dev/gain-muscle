@@ -44,7 +44,7 @@ class _exerciseRecordViewState extends State<exerciseRecordView> {
               focusedDay: _focusedDay,
               startingDayOfWeek: StartingDayOfWeek.monday,
               calendarFormat: _calendarFormat,
-              availableCalendarFormats: {CalendarFormat.week: 'Week', CalendarFormat.month: 'Month'},
+              availableCalendarFormats: {CalendarFormat.week: 'Week'},
               headerStyle: HeaderStyle(
                 formatButtonVisible: false,
                 headerMargin:
