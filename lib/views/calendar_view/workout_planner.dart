@@ -162,7 +162,7 @@ class _WorkoutPlannerState extends State<WorkoutPlanner> {
       return Row(
         children: [
           Text(_workoutList[index].name),
-          IconButton(
+          ElevatedButton(
             onPressed: () {
               setState(() {
                 _workoutList[index].isSelected = false;
@@ -170,10 +170,37 @@ class _WorkoutPlannerState extends State<WorkoutPlanner> {
                 _selectedWorkoutCounter--;
               });
             },
-            icon: Icon(Icons.clear),
+            child: Icon(Icons.clear),
+            style: ElevatedButton.styleFrom(
+              shape: CircleBorder(),
+            ),
           ),
+          // Container(
+          //   color: Colors.black,
+          //   child: IconButton(
+          //     onPressed: () {
+          //       setState(() {
+          //         _workoutList[index].isSelected = false;
+          //         _workoutList[index].color = Colors.white;
+          //         _selectedWorkoutCounter--;
+          //       });
+          //     },
+          //     icon: Icon(Icons.clear),
+          //     color: Colors.white,
+          //   ),
+          // ),
         ],
       );
+      // return OutlinedButton(
+      //   onPressed: () {
+      //     setState(() {
+      //       _workoutList[index].isSelected = false;
+      //       _workoutList[index].color = Colors.white;
+      //       _selectedWorkoutCounter--;
+      //     });
+      //   },
+      //   child: Text(_workoutList[index].name),
+      // );
     }
 
     return SizedBox.shrink();
@@ -246,22 +273,20 @@ class _WorkoutPlannerState extends State<WorkoutPlanner> {
           // [#2] - 검색된 운동 목록 출력
           // ==========================================
           Expanded(
-            flex: 6,
+            flex: 9,
             child: ListView.builder(
               shrinkWrap: true,
               itemCount: _workoutList.length,
               itemBuilder: (context, index) {
-                return Container(
-                  child: _printSearchedWorkoutList(index),
-                );
+                return _printSearchedWorkoutList(index);
               },
             ),
           ),
-          // Divider(
-          //   thickness: 2.0,
-          //   indent: 10,
-          //   endIndent: 10,
-          // ),
+          Divider(
+            thickness: 2.0,
+            indent: 10,
+            endIndent: 10,
+          ),
 
           // ==========================================
           // [#3] - 선택된 운동 목록 출력 장바구니
@@ -275,10 +300,7 @@ class _WorkoutPlannerState extends State<WorkoutPlanner> {
                 shrinkWrap: true,
                 itemCount: _workoutList.length,
                 itemBuilder: (context, index) {
-                  return Container(
-                    color: Colors.purple,
-                    child: _printSelectedWorkoutList(index),
-                  );
+                  return _printSelectedWorkoutList(index);
                 },
               ),
             ),
@@ -287,21 +309,28 @@ class _WorkoutPlannerState extends State<WorkoutPlanner> {
           // ==========================================
           // [#4] - 세부 계획 입력 뷰 이동
           // ==========================================
-          Container(
-            color: Colors.green,
-            padding: EdgeInsets.all(10.0),
-            child: ElevatedButton(
-              child: Text('Button Test'),
-              onPressed: _isVisible()
-                  ? () => Get.to(
-                        WorkoutDetailPlanner(),
-                        arguments: {
-                          'selectedDay': _selectedDay,
-                          'workoutList': _workoutList,
-                        },
-                      )
-                  : null,
+          Expanded(
+            flex: 1,
+            child: Container(
+              color: Colors.green,
+              padding: EdgeInsets.all(10.0),
+              child: ElevatedButton(
+                child: Text('Button Test'),
+                onPressed: _isVisible()
+                    ? () => Get.to(
+                          WorkoutDetailPlanner(),
+                          arguments: {
+                            'selectedDay': _selectedDay,
+                            'workoutList': _workoutList,
+                          },
+                        )
+                    : null,
+              ),
             ),
+          ),
+          Expanded(
+            flex: 1,
+            child: SizedBox.shrink(),
           ),
         ],
       ),
