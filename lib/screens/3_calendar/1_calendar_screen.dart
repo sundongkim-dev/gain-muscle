@@ -64,8 +64,6 @@ class _calendarViewState extends State<calendarView> {
   @override
   Widget build(BuildContext context) {
     final controller = Get.put(Controller());
-    CollectionReference recordDB =
-        FirebaseFirestore.instance.collection('user/$userName/record');
     return GetBuilder<Controller>(builder: (_) {
       return Scaffold(
         resizeToAvoidBottomInset: false,

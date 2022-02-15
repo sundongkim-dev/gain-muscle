@@ -1,11 +1,9 @@
 import 'dart:convert';
-import 'dart:ffi';
-import 'dart:ui';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter_spinbox/flutter_spinbox.dart';
 import 'package:flutter/material.dart';
-import 'package:gain_muscle/screens/3_calendar/1_calendar_screen.dart';
+import 'package:gain_muscle/screens/0_login/2_base_screen.dart';
+
 import 'package:gain_muscle/tmp/controller.dart';
 import 'package:get/get.dart';
 
@@ -98,30 +96,29 @@ class _DailyInputViewState extends State<DailyInputView> {
     String today = unixTimestamp.year.toString() +
         unixTimestamp.month.toString() +
         unixTimestamp.day.toString();
-
     var docSnapshot = userDB.doc(userName);
     var recordSnapshot = docSnapshot.collection('record');
     print("오늘의 기록이 잘 입력되었습니다");
 
+    // data의 각 원소 = [운동이름, 세트수, [세트별 무게, 반복 횟수]]
     List<dynamic> data = [];
+    // 하루의 총 운동 볼륨(무게 * 횟수)를 담는 변수
+    int total = 0;
     for (String i in routine.keys) {
+      // 현재 운동의 [무게, 반복 횟수] 가 세트별로 저장되는 배열
       List<dynamic> tmpData = [];
       for (int j = 0; j < routine[i]!.length; j++) {
         tmpData.add([routine[i]![j][0], routine[i]![j][1]]);
+        total += routine[i]![j][0] * routine[i]![j][1];
       }
       data.add([i, routine[i]!.length, tmpData]);
     }
 
     recordSnapshot.doc(today).set({
-      // 'data': jsonEncode(routine),
       'data': jsonEncode(data),
       'date': today,
-      // 'count': jsonEncode(cnt),
+      'volume': total,
     });
-
-    // setState(() {
-    //   dailyRecord.clear();
-    // });
   }
 
   @override
@@ -261,7 +258,7 @@ class _DailyInputViewState extends State<DailyInputView> {
                       print("루틴에 저장된 운동 출력!\n");
                       print(routine);
                       saveRoutine();
-                      Get.offAll(calendarView());
+                      Get.offAll(BaseView());
                     },
                     child: Text(
                       '저장하기',

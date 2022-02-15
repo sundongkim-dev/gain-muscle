@@ -15,13 +15,7 @@ class BaseView extends StatefulWidget {
 
 class _BaseViewState extends State<BaseView> {
   int _idx = 0;
-  final List _page = [
-    homeView(),
-    RecordView(),
-    calendarView(),
-    itemView(),
-    userView()
-  ];
+  final List _page = [homeView(), calendarView(), itemView(), userView()];
 
   void onTabTapped(int idx) {
     setState(() {
@@ -33,17 +27,6 @@ class _BaseViewState extends State<BaseView> {
   Widget build(BuildContext context) {
     print('basicstructure');
     return Scaffold(
-      // appBar: AppBar(
-      //   backgroundColor: Color(0xff84ffff),
-      //   leading: Icon(
-      //     Icons.favorite,
-      //     color: Colors.red,
-      //   ),
-      //   title: Text(
-      //     '득근득근',
-      //     style: TextStyle(color: Colors.black),
-      //   ),
-      // ),
       body: _page[_idx],
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
@@ -54,9 +37,8 @@ class _BaseViewState extends State<BaseView> {
         onTap: onTabTapped,
         items: [
           BottomNavigationBarItem(icon: Icon(Icons.home), label: '홈'),
-          BottomNavigationBarItem(icon: Icon(Icons.audiotrack), label: '운동기록'),
           BottomNavigationBarItem(
-              icon: Icon(Icons.calendar_today), label: '달력'),
+              icon: Icon(Icons.calendar_today), label: '운동기록'),
           BottomNavigationBarItem(
               icon: Icon(Icons.beach_access), label: '아이템,칭호'),
           BottomNavigationBarItem(icon: Icon(Icons.favorite), label: '사용자계정'),
