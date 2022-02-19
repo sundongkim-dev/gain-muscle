@@ -17,24 +17,6 @@ class _exerciseInputViewState extends State<exerciseInputView> {
   final controller = Get.put(Controller());
   final textController = TextEditingController();
 
-  FirebaseFirestore firestore = FirebaseFirestore.instance;
-  Stream<QuerySnapshot> streamData;
-  @override
-  void initState() {
-    super.initState();
-    streamData = firestore.collection('workout').snapshots();
-  }
-
-  Widget _fetchData(BuildContext context) {
-    return StreamBuilder<QuerySnapshot>(
-      stream: Firestore.instance.collection('movie').snapshots(),
-      builder: (context, snapshot) {
-        if (!snapshot.hasData) return LinearProgressIndicator();
-        return _buildBody(context, snapshot.data.documents);
-      },
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return GetBuilder<Controller>(builder: (_) {
@@ -157,7 +139,14 @@ class _exerciseInputViewState extends State<exerciseInputView> {
       );
     });
   }
+  Future<String> _fetch1() async {
+    await Future.delayed(Duration(seconds: 2));
+    return 'Call Data';
+  }
 }
+
+
+
 
 Padding partStuff(String name, int idx) {
   bool tapped = false;
@@ -218,3 +207,4 @@ Padding exerciseStuff(String name) {
     ),
   );
 }
+

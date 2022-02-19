@@ -371,29 +371,3 @@ class _calendarViewState extends State<calendarView> {
     });
   }
 }
-
-// Padding retpad() {
-//   return Padding(
-//     padding: EdgeInsets.fromLTRB(30, 10, 30, 0),
-//     child: Card(
-//       child: Column(
-//         children: [
-//           Row(
-//             children: [
-//               Padding(
-//                 padding: EdgeInsets.fromLTRB(20, 10, 20, 10),
-//                 child: Text(
-//                   exercise[i],
-//                   style: TextStyle(color: Colors.black, fontSize: 20),
-//                 ),
-//               ),
-//             ],
-//           ),
-//           for (int j = 0; j < 3; j++)
-//             // 지금 이부분이 텍스트 컨트롤러를 넣기위해서 만든 부분인데
-//             Text('hello'),
-//         ],
-//       ),
-//     ),
-//   );
-// }

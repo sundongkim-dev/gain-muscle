@@ -19,7 +19,6 @@ class _WorkoutPlannerState extends State<WorkoutPlanner> {
 
   // 선택된 날짜
   final DateTime _selectedDay = Get.arguments;
-
   final TextEditingController _textEditingController = TextEditingController();
 
   // 그룹버튼/ 컨트롤러

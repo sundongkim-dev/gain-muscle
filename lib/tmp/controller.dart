@@ -20,7 +20,6 @@ class Controller extends GetxController {
         exerciseStuff('레그 익스텐션'),
         exerciseStuff('덤벨 런지'),
         exerciseStuff('스모 데드리프트'),
-        exerciseStuff('스탠딩 카프 레이즈'),
         exerciseStuff('이너 싸이 머신'),
         exerciseStuff('에어 스쿼트'),
         exerciseStuff('런지'),
