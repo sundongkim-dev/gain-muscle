@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 
 class Controller extends GetxController {
@@ -211,48 +212,6 @@ class Controller extends GetxController {
 }
 
 TextButton exerciseStuff(String name) {
-  // return GestureDetector(
-  //   onTap: () {
-  //     if (Get.find<Controller>().exerciseBasket.contains(name)) {
-  //       Get.find<Controller>().removeFromBasket(name);
-  //     } else {
-  //       Get.find<Controller>().addToBasket(name);
-  //     }
-  //     print("잘 눌림");
-  //   },
-  //   child: Padding(
-  //     padding: EdgeInsets.fromLTRB(0, 0, 0, 20),
-  //     child: Row(
-  //       children: [
-  //         Padding(
-  //           padding: EdgeInsets.fromLTRB(30, 0, 0, 0),
-  //           child: Image.asset(
-  //             'assets/Img/userviewImg/strong.png',
-  //             width: 40,
-  //             height: 40,
-  //           ),
-  //         ),
-  //         Expanded(
-  //           child: Padding(
-  //             padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
-  //             child: Text(
-  //               name,
-  //               style: TextStyle(
-  //                   backgroundColor:
-  //                       false ? Colors.blue.shade300 : Colors.white,
-  //                   color: false ? Colors.white : Colors.black),
-  //             ),
-  //           ),
-  //         ),
-  //         Padding(
-  //           padding: EdgeInsets.fromLTRB(0, 0, 20, 0),
-  //           child: Icon(Icons.favorite),
-  //         ),
-  //       ],
-  //     ),
-  //   ),
-  // );
-
   return TextButton(
       onPressed: () {
         if (Get.find<Controller>().exerciseBasket.contains(name)) {
