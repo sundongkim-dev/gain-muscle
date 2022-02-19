@@ -58,7 +58,7 @@ class _calendarViewState extends State<calendarView> {
                     ),
                     rightChevronPadding: EdgeInsets.fromLTRB(0, 0, 100, 0)),
                 holidayPredicate: (day) {
-                  return day.weekday == DateTime.saturday;
+                  return day.weekday == DateTime.sunday;
                 },
                 // 평일, 주말 나누기
                 daysOfWeekStyle: DaysOfWeekStyle(
@@ -125,6 +125,12 @@ class _calendarViewState extends State<calendarView> {
                               "월" +
                               _focusedDay.day.toString() +
                               "일"),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          // if 계획 없다면? 흐름 알 수 있게 텍스트 제공
+                          Text("오늘의 계획이 없네요.\n\n 달력을 스크롤하거나 아래 버튼을 눌러서 계획을 잡읍시다!!",
+                            textAlign: TextAlign.center,),
                           SizedBox(
                             height: 20,
                           ),

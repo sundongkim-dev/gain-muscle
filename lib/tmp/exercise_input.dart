@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:gain_muscle/tmp/controller.dart';
 import 'package:get/get.dart';
@@ -15,6 +16,25 @@ class exerciseInputView extends StatefulWidget {
 class _exerciseInputViewState extends State<exerciseInputView> {
   final controller = Get.put(Controller());
   final textController = TextEditingController();
+
+  FirebaseFirestore firestore = FirebaseFirestore.instance;
+  Stream<QuerySnapshot> streamData;
+  @override
+  void initState() {
+    super.initState();
+    streamData = firestore.collection('workout').snapshots();
+  }
+
+  Widget _fetchData(BuildContext context) {
+    return StreamBuilder<QuerySnapshot>(
+      stream: Firestore.instance.collection('movie').snapshots(),
+      builder: (context, snapshot) {
+        if (!snapshot.hasData) return LinearProgressIndicator();
+        return _buildBody(context, snapshot.data.documents);
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return GetBuilder<Controller>(builder: (_) {
