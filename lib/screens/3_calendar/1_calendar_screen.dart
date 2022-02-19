@@ -95,7 +95,7 @@ class _calendarViewState extends State<calendarView> {
                     ),
                     rightChevronPadding: EdgeInsets.fromLTRB(0, 0, 100, 0)),
                 holidayPredicate: (day) {
-                  return day.weekday == DateTime.saturday;
+                  return day.weekday == DateTime.sunday;
                 },
                 // 평일, 주말 나누기
                 daysOfWeekStyle: DaysOfWeekStyle(
