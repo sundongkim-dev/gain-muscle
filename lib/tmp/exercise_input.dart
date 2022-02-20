@@ -53,6 +53,7 @@ class _exerciseInputViewState extends State<exerciseInputView> {
                       labelText: '찾으시는 운동을 검색해보세요',
                     )),
               ),
+
               Container(
                 // width: 800,
                 height: 80,
@@ -139,14 +140,7 @@ class _exerciseInputViewState extends State<exerciseInputView> {
       );
     });
   }
-  Future<String> _fetch1() async {
-    await Future.delayed(Duration(seconds: 2));
-    return 'Call Data';
-  }
 }
-
-
-
 
 Padding partStuff(String name, int idx) {
   bool tapped = false;
