@@ -118,7 +118,6 @@ class _calendarViewState extends State<calendarView> {
                 holidayDecoration: const BoxDecoration(),
               ),
               holidayPredicate: (day) {
-                print(DateTime.now());
                 return day.weekday == DateTime.sunday && (day.month == DateTime.now().month);
               },
               onFormatChanged: (format) => _onFormatChanged(format),
