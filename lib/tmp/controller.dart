@@ -223,7 +223,7 @@ TextButton exerciseStuff(String name) {
       child: Padding(
         padding: EdgeInsets.fromLTRB(0, 0, 0, 20),
         child: Container(
-          color: false ? Colors.blue.shade300 : Colors.white,
+          color: Get.find<Controller>().exerciseBasket.contains(name) ? Colors.blue.shade300 : Colors.white,
           child: Row(
             children: [
               Padding(

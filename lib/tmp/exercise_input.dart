@@ -1,22 +1,41 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:gain_muscle/tmp/controller.dart';
 import 'package:get/get.dart';
-
+import 'package:group_button/group_button.dart';
 import 'daily_input_view.dart';
 
-class exerciseInputView extends StatefulWidget {
-  const exerciseInputView({Key? key, required this.today}) : super(key: key);
+class WorkoutPlanner extends StatefulWidget {
+  const WorkoutPlanner({Key? key, required this.today}) : super(key: key);
 
   final DateTime today;
+
   @override
-  _exerciseInputViewState createState() => _exerciseInputViewState();
+  _WorkoutPlannerState createState() => _WorkoutPlannerState();
 }
 
-class _exerciseInputViewState extends State<exerciseInputView> {
+class _WorkoutPlannerState extends State<WorkoutPlanner> {
   final controller = Get.put(Controller());
   final textController = TextEditingController();
+  final FocusNode _focusNode = FocusNode();
+  final GroupButtonController _groupButtonController = GroupButtonController();
+  bool _isGroupButtonVisible = true;
 
+  @override
+  void initState() {
+    super.initState();
+    _focusNode.addListener(_onFocusChanged);
+  }
+  void _onFocusChanged() {
+    setState(() {
+      _focusNode.hasFocus
+          ? _isGroupButtonVisible = false
+          : _isGroupButtonVisible = true;
+
+      if (_isGroupButtonVisible) {
+        _groupButtonController.unselectAll();
+      }
+    });
+  }
   @override
   Widget build(BuildContext context) {
     return GetBuilder<Controller>(builder: (_) {
@@ -88,6 +107,7 @@ class _exerciseInputViewState extends State<exerciseInputView> {
                             OutlinedButton(
                               onPressed: () {
                                 setState(() {
+                                  print("!@3");
                                   _.exerciseBasket.remove(_.exerciseBasket[i]);
                                 });
                               },
@@ -105,14 +125,6 @@ class _exerciseInputViewState extends State<exerciseInputView> {
                                     MaterialStateProperty.all(Colors.black),
                                 side: MaterialStateProperty.all(
                                     BorderSide(color: Colors.white)),
-                                // shape:
-                                //     MaterialStateProperty.all<OutlinedBorder>(
-                                //   RoundedRectangleBorder(
-                                //     borderRadius: BorderRadius.all(
-                                //       Radius.circular(30.0),
-                                //     ),
-                                //   ),
-                                // ),
                               ),
                             ),
                           // Text(_.exerciseBasket[i])
@@ -152,7 +164,6 @@ Padding partStuff(String name, int idx) {
       },
       child: Text(
         name,
-        // style: TextStyle(color: Colors.black),
       ),
       style: ButtonStyle(
         foregroundColor: idx == Get.find<Controller>().index

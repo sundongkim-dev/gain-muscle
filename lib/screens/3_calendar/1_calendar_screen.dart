@@ -26,7 +26,7 @@ class _calendarViewState extends State<calendarView> {
   final Future<FirebaseApp> _initialization = Firebase.initializeApp();
 
   Map<DateTime, List<Event>> selectedEvents = {};
-  CalendarFormat _calendarFormat = CalendarFormat.month;
+  CalendarFormat _calendarFormat = CalendarFormat.month; // 기본 달력 표시 단위는 월간
   DateTime _focusedDay = DateTime.now();
   DateTime _selectedDay = DateTime.now();
 
@@ -55,9 +55,7 @@ class _calendarViewState extends State<calendarView> {
     Map<String, dynamic> record = docsnapshot.data() as Map<String, dynamic>;
     // routine = jsonDecode(record['data']) as Map<String, dynamic>;
     routine = jsonDecode(record['data']) as List<dynamic>;
-
     print(routine);
-
     print('데이터를 받아옵니다.3');
   }
 
@@ -66,7 +64,7 @@ class _calendarViewState extends State<calendarView> {
     final controller = Get.put(Controller());
     return GetBuilder<Controller>(builder: (_) {
       return Scaffold(
-        resizeToAvoidBottomInset: false,
+        resizeToAvoidBottomInset: false, // 텍스트필드 터치했을 때, 키보드 밀려올라와 오버플로우되는 것 방지
         body: SingleChildScrollView(
           child: Column(
             children: [
@@ -82,8 +80,7 @@ class _calendarViewState extends State<calendarView> {
                 },
                 headerStyle: HeaderStyle(
                     formatButtonVisible: false,
-                    headerMargin: EdgeInsets.only(
-                        left: 0, top: 10, right: 40, bottom: 10),
+                    headerMargin: EdgeInsets.only(left: 0, top: 10, right: 40, bottom: 10),
                     titleCentered: true,
                     leftChevronIcon: Icon(
                       Icons.arrow_left,
@@ -103,11 +100,9 @@ class _calendarViewState extends State<calendarView> {
                     weekendStyle: TextStyle(color: Colors.black)),
                 calendarStyle: CalendarStyle(
                   outsideDaysVisible: true,
-                  weekendTextStyle:
-                      TextStyle().copyWith(color: Colors.blue[800]),
-                  // 오늘 뭐 안뜨게 하려면 기본이랑 똑같게 설정해놔야하는데 나중에 하자 조낸 귀찮다
+                  weekendTextStyle: TextStyle().copyWith(color: Colors.blue[800]),
                   todayDecoration: BoxDecoration(shape: BoxShape.circle),
-                  todayTextStyle: TextStyle(),
+                  todayTextStyle: TextStyle(color: Colors.cyanAccent),
                   selectedDecoration: BoxDecoration(
                       color: const Color(0xFFa8d8ea), shape: BoxShape.circle),
                   holidayTextStyle:
@@ -162,10 +157,8 @@ class _calendarViewState extends State<calendarView> {
                                 SizedBox(
                                   height: 20,
                                 ),
-                                Text(_focusedDay.month.toString() +
-                                    "월" +
-                                    _focusedDay.day.toString() +
-                                    "일"),
+                                Text(_focusedDay.month.toString() + "월" +
+                                    _focusedDay.day.toString() + "일"),
                                 SizedBox(
                                   height: 20,
                                 ),
@@ -184,10 +177,6 @@ class _calendarViewState extends State<calendarView> {
                             return Column(
                               children: [
                                 for (int i = 0; i < routine.length; i++)
-                                  // ExerciseTile(
-                                  //     name: routine[i][0],
-                                  //     weight: routine[i][1].toString(),
-                                  //     rep: routine[i][2].toString())
                                   Padding(
                                     padding: EdgeInsets.fromLTRB(30, 10, 30, 0),
                                     child: Card(
@@ -272,7 +261,7 @@ class _calendarViewState extends State<calendarView> {
                                   child: FloatingActionButton.extended(
                                     onPressed: () async {
                                       // Get.to(() => exerciseInputView(today: widget.today));
-                                      Get.to(() => exerciseInputView(
+                                      Get.to(() => WorkoutPlanner(
                                           today: _focusedDay));
                                       setState(() {});
                                     },

@@ -206,7 +206,7 @@ class _basicViewState extends State<basicView> {
             padding: EdgeInsets.fromLTRB(0, 40, 0, 30),
             child: FloatingActionButton.extended(
               onPressed: () async {
-                Get.to(() => exerciseInputView(today: widget.today));
+                Get.to(() => WorkoutPlanner(today: widget.today));
                 setState(() {});
               },
               label: Text('득근루틴 짜러가기'),
