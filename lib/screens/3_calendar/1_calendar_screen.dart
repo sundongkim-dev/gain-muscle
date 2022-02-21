@@ -107,18 +107,17 @@ class _calendarViewState extends State<calendarView> {
               ),
               daysOfWeekStyle: DaysOfWeekStyle(
                   weekdayStyle: TextStyle(color: Colors.black),
-                  weekendStyle: TextStyle(color: Colors.black)),
+                  weekendStyle: TextStyle(color: Colors.black),
+              ),
               calendarStyle: CalendarStyle(
                 outsideDaysVisible: true,
                 outsideTextStyle: TextStyle().copyWith(color: Colors.grey),
                 weekendTextStyle: TextStyle().copyWith(color: Colors.blue[800]),
-                selectedDecoration: BoxDecoration(
-                    color: const Color(0xFFa8d8ea), shape: BoxShape.circle),
                 holidayTextStyle: TextStyle().copyWith(color: Colors.red[800]),
                 holidayDecoration: const BoxDecoration(),
               ),
               holidayPredicate: (day) {
-                return day.weekday == DateTime.sunday;
+                return (day.weekday == DateTime.sunday) && (day.month == DateTime.now().month);
               },
               onFormatChanged: (format) => _onFormatChanged(format),
               selectedDayPredicate: (day) => isSameDay(_selectedDay, day),
