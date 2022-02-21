@@ -3,7 +3,7 @@ import 'package:gain_muscle/tmp/ch/workout_detail_planner.dart';
 import 'package:get/get.dart';
 import 'package:group_button/group_button.dart';
 import 'package:intl/intl.dart';
-import 'temp_workout_list.dart';
+import '../../tmp/ch/temp_workout_list.dart';
 
 // import 'package:gain_muscle/views/calendar_view/workout_detail_planner.dart';
 // import 'package:gain_muscle/src/app.dart';

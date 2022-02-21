@@ -6,7 +6,7 @@ import 'package:table_calendar/table_calendar.dart';
 
 import 'meal_planner.dart';
 import 'temp_workout_meal_planner.dart';
-import 'workout_planner.dart';
+import '../../screens/3_calendar/workout_planner.dart';
 
 class CalendarView extends StatefulWidget {
   const CalendarView({Key? key}) : super(key: key);

@@ -4,8 +4,8 @@ import 'package:group_button/group_button.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 import 'meal_planner.dart';
-import 'workout_planner.dart';
-import 'workout_planner.dart';
+import '../../screens/3_calendar/workout_planner.dart';
+import '../../screens/3_calendar/workout_planner.dart';
 
 enum RadioItems { workout, meal }
 

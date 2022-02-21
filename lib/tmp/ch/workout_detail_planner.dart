@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gain_muscle/tmp/ch/workout_planner.dart';
+import 'package:gain_muscle/screens/3_calendar/workout_planner.dart';
 import 'package:get/get.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'temp_workout_list.dart';
