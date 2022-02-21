@@ -41,6 +41,14 @@ class _CalendarViewState extends State<CalendarView> {
     _currentFormat = true;
   }
 
+
+  @override
+  void dispose() {
+    super.dispose();
+
+    _groupButtonController.dispose();
+  }
+
   void _onDaySelected(DateTime selectedDay, DateTime focusedDay) {
     if (!isSameDay(_selectedDay, selectedDay)) {
       setState(() {
@@ -52,22 +60,8 @@ class _CalendarViewState extends State<CalendarView> {
 
   void _onFormatChanged(CalendarFormat format) {
     setState(() {
-      // Format Change except 2week format
-      // month -> week
-      if (format == CalendarFormat.twoWeeks && _currentFormat == true) {
-        _calendarFormat = CalendarFormat.week;
-        _currentFormat = false;
-      }
-      // week -> month
-      else if (format == CalendarFormat.twoWeeks && _currentFormat == false) {
-        _calendarFormat = CalendarFormat.month;
-        _currentFormat = true;
-      } else {
-        _calendarFormat = format;
-        format == CalendarFormat.month
-            ? _currentFormat = true
-            : _currentFormat = false;
-      }
+      _calendarFormat = format;
+      format == CalendarFormat.month ? _currentFormat = true : _currentFormat = false;
     });
   }
 
@@ -83,17 +77,20 @@ class _CalendarViewState extends State<CalendarView> {
               firstDay: kFirstDay,
               lastDay: kLastDay,
               headerStyle: HeaderStyle(
-                // formatButtonVisible: false,
                 formatButtonShowsNext: false,
                 formatButtonDecoration: BoxDecoration(
-                  color: Colors.blue,
+                  // color: Colors.blue,
                   borderRadius: BorderRadius.circular(8.0),
                 ),
                 formatButtonTextStyle: TextStyle(
-                  color: Colors.white,
+                  // color: Colors.white,
                 ),
               ),
               calendarFormat: _calendarFormat,
+              availableCalendarFormats: const {
+                CalendarFormat.month: '월간',
+                CalendarFormat.week: '주간',
+              },
               onFormatChanged: (format) => _onFormatChanged(format),
               selectedDayPredicate: (day) => isSameDay(_selectedDay, day),
               onDaySelected: _onDaySelected,
@@ -118,6 +115,7 @@ class _CalendarViewState extends State<CalendarView> {
                     ),
                     ElevatedButton(
                       child: Text('계획하기'),
+                      // onPressed: () => _onFormatChanged(CalendarFormat.week),
                       onPressed: () => _onFormatChanged(CalendarFormat.week),
                     ),
                   ],
@@ -156,12 +154,13 @@ class _CalendarViewState extends State<CalendarView> {
                         children: [
                           Padding(
                             padding: EdgeInsets.all(20.0),
-                            child: Image.asset('assets/Img/userviewImg/strongColored.png'),
+                            child: Image.asset(
+                                'assets/Img/userviewImg/strongColored.png'),
                           ),
                           ElevatedButton(
                             child: Text('운동 계획 생성'),
-                            onPressed: () =>
-                                Get.to(WorkoutPlanner(), arguments: _selectedDay),
+                            onPressed: () => Get.to(WorkoutPlanner(),
+                                arguments: _selectedDay),
                           ),
                         ],
                       ),
@@ -173,7 +172,8 @@ class _CalendarViewState extends State<CalendarView> {
                         children: [
                           Padding(
                             padding: EdgeInsets.all(20.0),
-                            child: Image.asset('assets/Img/userviewImg/hamburger.png'),
+                            child: Image.asset(
+                                'assets/Img/userviewImg/hamburger.png'),
                           ),
                           ElevatedButton(
                             child: Text('식단 계획 생성'),
