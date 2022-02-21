@@ -3,10 +3,10 @@ import 'dart:convert';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:gain_muscle/tmp/daily_record_view.dart';
 import 'package:get/get.dart';
 
-import '../utils.dart';
-import 'daily_record_view.dart';
+import '../../utils.dart';
 
 class RecordView extends StatefulWidget {
   const RecordView({Key? key}) : super(key: key);

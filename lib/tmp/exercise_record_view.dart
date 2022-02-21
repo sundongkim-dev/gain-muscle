@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:gain_muscle/src/controller.dart';
+import 'package:gain_muscle/tmp/controller.dart';
 import 'package:get/get.dart';
 import 'package:table_calendar/table_calendar.dart';
+
+import 'exercise_input.dart';
+import 'load_exercise_view.dart';
 
 class exerciseRecordView extends StatefulWidget {
   const exerciseRecordView({Key? key, required this.selectedDay})
@@ -96,7 +99,9 @@ class _exerciseRecordViewState extends State<exerciseRecordView> {
               indent: 10,
               endIndent: 10,
             ),
-            _.isTodayRest ? restView() : basicView(),
+            _.isTodayRest
+                ? restView(today: _selectedDay)
+                : basicView(today: _selectedDay)
           ],
         ),
       );
@@ -105,8 +110,9 @@ class _exerciseRecordViewState extends State<exerciseRecordView> {
 }
 
 class restView extends StatefulWidget {
-  const restView({Key? key}) : super(key: key);
+  const restView({Key? key, required this.today}) : super(key: key);
 
+  final DateTime today;
   @override
   _restViewState createState() => _restViewState();
 }
@@ -157,8 +163,9 @@ class _restViewState extends State<restView> {
 }
 
 class basicView extends StatefulWidget {
-  const basicView({Key? key}) : super(key: key);
+  const basicView({Key? key, required this.today}) : super(key: key);
 
+  final DateTime today;
   @override
   _basicViewState createState() => _basicViewState();
 }
@@ -198,12 +205,10 @@ class _basicViewState extends State<basicView> {
           Padding(
             padding: EdgeInsets.fromLTRB(0, 40, 0, 30),
             child: FloatingActionButton.extended(
-              onPressed: null,
-              // () {
-              //   Get.to(exerciseRecordView(
-              //     selectedDay: _focusedDay,
-              //   ));
-              // },
+              onPressed: () async {
+                Get.to(() => exerciseInputView(today: widget.today));
+                setState(() {});
+              },
               label: Text('득근루틴 짜러가기'),
               icon: Icon(Icons.shopping_cart),
             ),
@@ -216,7 +221,10 @@ class _basicViewState extends State<basicView> {
                 FloatingActionButton.extended(
                   backgroundColor: Colors.white,
                   foregroundColor: Colors.black,
-                  onPressed: null,
+                  onPressed: () async {
+                    Get.to(() => loadExerciseView(today: widget.today));
+                    setState(() {});
+                  },
                   label: Text('불러오기'),
                   heroTag: null,
                 ),
