@@ -102,7 +102,7 @@ class _homeViewState extends State<homeView> {
                                 ),
                                 child: Center(
                                   child: Text(
-                                    '헬스장의 수호자',
+                                    '#User Title#',
                                     style: TextStyle(fontSize: 15),
                                   ),
                                 ),
