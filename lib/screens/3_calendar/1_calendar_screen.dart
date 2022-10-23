@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+<<<<<<< Updated upstream
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:gain_muscle/tmp/ch/meal_planner.dart';
@@ -11,6 +12,13 @@ import 'package:gain_muscle/tmp/exercise_input.dart';
 import 'package:gain_muscle/tmp/exercise_record_view.dart';
 import 'package:gain_muscle/tmp/load_exercise_view.dart';
 import 'package:get/get.dart';
+=======
+import 'package:flutter/material.dart';
+import 'package:gain_muscle/screens/3_calendar/2_workout_screen.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:get/get_navigation/src/extension_navigation.dart';
+import 'package:intl/intl.dart';
+>>>>>>> Stashed changes
 import 'package:table_calendar/table_calendar.dart';
 
 import '../../utils.dart';
@@ -58,11 +66,23 @@ class _calendarViewState extends State<calendarView> {
 
     print(routine);
 
+<<<<<<< Updated upstream
     print('데이터를 받아옵니다.3');
+=======
+  // 선택된 날짜 포커스
+  void _onDaySelected(DateTime selectedDay, DateTime focusedDay) {
+    if (!isSameDay(_selectedDay, selectedDay)) {
+      setState(() {
+        _selectedDay = selectedDay;
+        _focusedDay = focusedDay;
+      });
+    }
+>>>>>>> Stashed changes
   }
 
   @override
   Widget build(BuildContext context) {
+<<<<<<< Updated upstream
     final controller = Get.put(Controller());
     return GetBuilder<Controller>(builder: (_) {
       return Scaffold(
@@ -113,6 +133,32 @@ class _calendarViewState extends State<calendarView> {
                   holidayTextStyle:
                       TextStyle().copyWith(color: Colors.red[800]),
                   holidayDecoration: const BoxDecoration(),
+=======
+    return Scaffold(
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            TableCalendar(
+              locale: 'ko-KR',
+              focusedDay: _focusedDay,
+              firstDay: kFirstDay,
+              lastDay: kLastDay,
+              calendarFormat: _calendarFormat,
+              availableCalendarFormats: const {
+                CalendarFormat.month: 'Month',
+              },
+              headerStyle: HeaderStyle(
+                formatButtonVisible: false,
+                headerMargin: EdgeInsets.only(left: 0, top: 10, right: 40, bottom: 10),
+                titleCentered: true,
+                leftChevronIcon: Icon(
+                  Icons.arrow_left,
+                  size: 40,
+                ),
+                rightChevronIcon: Icon(
+                  Icons.arrow_right,
+                  size: 40,
+>>>>>>> Stashed changes
                 ),
 
                 selectedDayPredicate: (day) => isSameDay(_selectedDay, day),
@@ -150,6 +196,7 @@ class _calendarViewState extends State<calendarView> {
                 indent: 10,
                 endIndent: 10,
               ),
+<<<<<<< Updated upstream
               _.isMonth
                   ? FutureBuilder(
                       future: getData(),
@@ -262,10 +309,103 @@ class _calendarViewState extends State<calendarView> {
                                           style: TextStyle(
                                               backgroundColor: Colors.white,
                                               color: Colors.black),
+=======
+              holidayPredicate: (day) {
+                return day.weekday == DateTime.sunday && (day.month == DateTime.now().month);
+              },
+              selectedDayPredicate: (day) => isSameDay(_selectedDay, day),
+              onDaySelected: _onDaySelected,
+              onPageChanged: (focusedDay) {
+                _focusedDay = focusedDay;
+              },
+            ),
+            Divider(
+              thickness: 2.0,
+              indent: 10.0,
+              endIndent: 10.0,
+            ),
+            // ==========================================
+            // 달력 포맷: month
+            // ==========================================
+            FutureBuilder(
+              future: getData(),
+              builder: (context, snapshot) {
+                if(snapshot.connectionState == ConnectionState.done) {
+                  // ==========================================
+                  // 해당 날짜의 운동 기록 여부 : 없음
+                  // 계획하기 버튼
+                  // ==========================================
+                  if(routine.isEmpty) {
+                    return Column(
+                      children: [
+                        SizedBox(
+                          height: 20,
+                        ),
+                        Text(DateFormat('yyyy년 MM월 dd일').format(_selectedDay)),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        ElevatedButton(
+                          child: Text('득근루틴 계획하기'),
+                          onPressed: () => Get.to(() => workoutView(), arguments: _selectedDay),
+                        ),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        Padding(
+                          padding: EdgeInsets.fromLTRB(50, 0, 50, 0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              FloatingActionButton.extended(
+                                backgroundColor: Colors.white,
+                                foregroundColor: Colors.black,
+                                onPressed: () {},
+                                label: Text('불러오기'),
+                                heroTag: null,
+                              ),
+                              FloatingActionButton.extended(
+                                backgroundColor: Colors.white,
+                                foregroundColor: Colors.black,
+                                onPressed: () {},
+                                label: Text('휴식하기'),
+                                heroTag: null,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    );
+                  }
+                  // ==========================================
+                  // 해당 날짜의 운동 기록 여부 : 있음
+                  // 운동 계획 보여주기
+                  // ==========================================
+                  else {
+                    return Column(
+                      children: [
+                        for(int i=0; i<routine.length; i++)
+                          Padding(
+                            padding: EdgeInsets.fromLTRB(30, 10, 30, 0),
+                            child: Card(
+                              child: Column(
+                                children: [
+                                  Row(
+                                    children: [
+                                      Padding(
+                                        padding: EdgeInsets.fromLTRB(
+                                            20, 10, 20, 10),
+                                        child: Text(
+                                          routine[i][0],
+                                          style: TextStyle(
+                                              color: Colors.black,
+                                              fontSize: 20),
+>>>>>>> Stashed changes
                                         ),
                                       ),
                                     ],
                                   ),
+<<<<<<< Updated upstream
                                 ),
                                 Padding(
                                   padding: EdgeInsets.fromLTRB(0, 40, 0, 30),
@@ -366,6 +506,32 @@ class _calendarViewState extends State<calendarView> {
                       }),
             ],
           ),
+=======
+                                  for (int j = 0; j < routine[i][1]; j++)
+                                    Row(
+                                      children: [
+                                        Padding(
+                                          padding: EdgeInsets.fromLTRB(
+                                              5, 10, 5, 10),
+                                          child: Text(
+                                              '${j + 1}   ${routine[i][2][j][0]} kg   ${routine[i][2][j][1]} 회'),
+                                        ),
+                                      ],
+                                    )
+                                  ],
+                              ),
+                            ),
+                          ),
+                      ],
+                    );
+                  }
+                } else {
+                  return CircularProgressIndicator();
+                }
+              }
+            )
+          ],
+>>>>>>> Stashed changes
         ),
       );
     });
